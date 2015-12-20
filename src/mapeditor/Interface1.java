@@ -6,10 +6,12 @@
 package mapeditor;
 
 import codebuilder.CodeBuilder;
-import java.awt.BorderLayout;
+import droptarget.DragGestureListImp;
+import droptarget.DropTargetImpl;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragSource;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -17,16 +19,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 
 /**
@@ -75,19 +71,16 @@ public class Interface1 extends javax.swing.JFrame {
 
         @Override
         public void mousePressed(MouseEvent e) {
-
-            e.getComponent().setForeground(Color.red);
-
+            Component component = e.getComponent();
+            component.setForeground(Color.red);
+            
             spritesDoPanel.add(new JLabel(""));
-//            lb1.setForeground(Color.red);
-
             spritesDoPanel.get(spritesDoPanel.size() - 1).setBounds(e.getX(), e.getY(), 48, 48);
             for (int i = 0; i < imagensCarregadas.size(); i++) {
                 if (imagensCarregadas.get(i).getForeground() == Color.red) {
                     spritesDoPanel.get(spritesDoPanel.size() - 1).setIcon(new ImageIcon(files.get(i).getAbsolutePath()));
-                     spritesDoPanel.get(spritesDoPanel.size() - 1).setForeground(Color.black);
+                    spritesDoPanel.get(spritesDoPanel.size() - 1).setForeground(Color.black);
                 }
-               
 
             }
             spritesDoPanel.get(spritesDoPanel.size() - 1).setVisible(false);
@@ -142,6 +135,7 @@ public class Interface1 extends javax.swing.JFrame {
 
     public Interface1() {
         initComponents();
+        
         //addLabelGrid();
 //        panel2.addMouseListener(ml);
 //        panel2.setTransferHandler(new TransferHandler("icon"));
@@ -572,20 +566,20 @@ public class Interface1 extends javax.swing.JFrame {
         if (response == JFileChooser.APPROVE_OPTION) {
             files = Arrays.asList(fc.getSelectedFiles());
 
-            for (int i = 0; i < files.size(); i++) {
-                imagensCarregadas.add(new JLabel(""));
-                imagensCarregadas.get(i).setText(files.get(i).getName());
-                imagensCarregadas.get(i).setText(files.get(i).getName());
-                imagensCarregadas.get(i).setIcon(new ImageIcon(files.get(i).getAbsolutePath()));
-                imagensCarregadas.get(i).setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
-                imagensCarregadas.get(i).setBounds(panelObjetos.getX(), (panel1.getY() - 150) + 16 * i, 350, 350);
-
-                filesNameImg.add(new LoadFiles(files.get(i).getName(), new ImageIcon(files.get(i).getAbsolutePath())));
-
-                panelObjetos.add((Component) imagensCarregadas.get(i));
-                imagensCarregadas.get(i).addMouseListener(ml);
-                imagensCarregadas.get(i).addMouseMotionListener(ma);
-
+            int initialY = 0;
+            
+            for (File file : files) {
+                JLabel label = new JLabel("");
+                label.setText(file.getName());
+                label.setName(file.getName());
+                label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
+                label.setBounds(panelObjetos.getX() + 5, initialY , 100, 25);
+                label.addMouseListener(ml);
+                label.addMouseMotionListener(ma);
+                panelObjetos.add((Component) label);
+                filesNameImg.add(new LoadFiles(file.getName(), new ImageIcon(file.getAbsolutePath())));
+                
+                initialY = initialY + 26;
             }
 
         } else {
