@@ -586,8 +586,7 @@ public class Interface1 extends javax.swing.JFrame {
                 filesNameImg.add(new LoadFiles(file.getName(), new ImageIcon(file.getAbsolutePath())));
                 
                 DragSource ds = new DragSource();
-		ds.createDefaultDragGestureRecognizer(label, 
-                        DnDConstants.ACTION_COPY, new DragGestureImpl());
+		ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl());
                 initialY = initialY + 26;
             }
 

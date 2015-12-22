@@ -18,15 +18,16 @@ import javax.swing.JLabel;
  */
 public class DragGestureImpl implements DragGestureListener {
 
-		@Override
-		public void dragGestureRecognized(DragGestureEvent event) {
-			Cursor cursor = null;
-			JLabel label = (JLabel) event.getComponent();
+    @Override
+    public void dragGestureRecognized(DragGestureEvent event) {
+        Cursor cursor = null;
+        JLabel label = (JLabel) event.getComponent();
 
-			if (event.getDragAction() == DnDConstants.ACTION_COPY) {
-				cursor = DragSource.DefaultCopyDrop;
-			}
+        if (event.getDragAction() == DnDConstants.ACTION_COPY) {
+            cursor = DragSource.DefaultCopyDrop;
+        }
 
-			event.startDrag(cursor, new TransferableJLabel(label));
-		}
-	}
+        event.startDrag(cursor, new TransferableJLabel(label));
+    }
+    
+}
