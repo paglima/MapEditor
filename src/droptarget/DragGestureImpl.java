@@ -16,7 +16,7 @@ import javax.swing.JLabel;
  *
  * @author pauloarthur
  */
-public class DragGestureListImp implements DragGestureListener {
+public class DragGestureImpl implements DragGestureListener {
 
 		@Override
 		public void dragGestureRecognized(DragGestureEvent event) {

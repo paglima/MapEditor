@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package droptarget;
 
 import java.awt.datatransfer.DataFlavor;
@@ -15,10 +10,6 @@ import java.awt.dnd.DropTargetListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author pauloarthur
- */
 public class DropTargetImpl extends DropTargetAdapter implements DropTargetListener {
 
     private DropTarget dropTarget;
@@ -26,8 +17,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
 
     public DropTargetImpl(JPanel jpanel){
         this.panel = jpanel;
-        dropTarget = new DropTarget(panel, DnDConstants.ACTION_COPY, this,
-					true, null);
+        dropTarget = new DropTarget(panel, DnDConstants.ACTION_COPY, this, true, null);
     }
     
     @Override

@@ -6,7 +6,7 @@
 package mapeditor;
 
 import codebuilder.CodeBuilder;
-import droptarget.DragGestureListImp;
+import droptarget.DragGestureImpl;
 import droptarget.DropTargetImpl;
 import java.awt.Color;
 import java.awt.Component;
@@ -135,7 +135,7 @@ public class Interface1 extends javax.swing.JFrame {
 
     public Interface1() {
         initComponents();
-        new DropTargetImpl(panel2);
+        DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
         
         
         //addLabelGrid();
@@ -587,7 +587,7 @@ public class Interface1 extends javax.swing.JFrame {
                 
                 DragSource ds = new DragSource();
 		ds.createDefaultDragGestureRecognizer(label, 
-                        DnDConstants.ACTION_COPY, new DragGestureListImp());
+                        DnDConstants.ACTION_COPY, new DragGestureImpl());
                 initialY = initialY + 26;
             }
 
