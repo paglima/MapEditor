@@ -10,7 +10,6 @@ import java.awt.dnd.DropTargetListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import mapeditor.ComponentDragger;
 import mapeditor.DragAndDropWithinPanel;
 
 public class DropTargetImpl extends DropTargetAdapter implements DropTargetListener {
@@ -38,7 +37,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);
                 
-                label.setBounds(event.getLocation().x, event.getLocation().y, 48, 48);          
+                label.setBounds(event.getLocation().x, event.getLocation().y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());          
                 this.panel.add(label);
                 this.panel.repaint();
                 event.dropComplete(true);

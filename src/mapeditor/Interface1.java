@@ -1,5 +1,6 @@
 package mapeditor;
 
+import semUso.LoadFiles;
 import codebuilder.CodeBuilder;
 import droptarget.DragGestureImpl;
 import droptarget.DropTargetImpl;
@@ -66,6 +67,7 @@ public class Interface1 extends javax.swing.JFrame {
 
     public Interface1() {        
         initComponents();
+        
         pp = new PreviewSprites(labelPreview);
         DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
         panel2.setBackground(Color.white);
@@ -85,7 +87,7 @@ public class Interface1 extends javax.swing.JFrame {
     private void initComponents() {
 
         scrpanel1 = new javax.swing.JScrollPane();
-        panelPrincipal = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
         scrpanel2 = new javax.swing.JScrollPane();
         panel1 = new javax.swing.JTabbedPane();
         panelObjetos = new javax.swing.JPanel();
@@ -105,7 +107,7 @@ public class Interface1 extends javax.swing.JFrame {
         btnBackGround = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         btnImportSrpites = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrPreviewPanel = new javax.swing.JScrollPane();
         panelPreview = new javax.swing.JPanel();
         labelPreview = new javax.swing.JLabel();
         mb1 = new javax.swing.JMenuBar();
@@ -161,6 +163,11 @@ public class Interface1 extends javax.swing.JFrame {
         toolBar1.setRollover(true);
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Document-Blank-icon.png"))); // NOI18N
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         toolBar1.add(jButton8);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/open-file-icon.png"))); // NOI18N
@@ -240,34 +247,34 @@ public class Interface1 extends javax.swing.JFrame {
         panelPreview.setLayout(panelPreviewLayout);
         panelPreviewLayout.setHorizontalGroup(
             panelPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPreviewLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panelPreviewLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelPreviewLayout.setVerticalGroup(
             panelPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPreviewLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jScrollPane1.setViewportView(panelPreview);
+        scrPreviewPanel.setViewportView(panelPreview);
 
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
-        panelPrincipal.setLayout(panelPrincipalLayout);
-        panelPrincipalLayout.setHorizontalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(scrpanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrpanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(scrPreviewPanel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(toolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnImportSrpites)
@@ -280,31 +287,31 @@ public class Interface1 extends javax.swing.JFrame {
                         .addGap(0, 39, Short.MAX_VALUE)))
                 .addContainerGap(552, Short.MAX_VALUE))
         );
-        panelPrincipalLayout.setVerticalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(toolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnImportSrpites))))
                 .addGap(18, 18, 18)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(scrpanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scrPreviewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(427, Short.MAX_VALUE))
         );
 
-        scrpanel1.setViewportView(panelPrincipal);
+        scrpanel1.setViewportView(mainPanel);
 
         jMenu1.setText("Arquivo");
 
@@ -500,26 +507,23 @@ public class Interface1 extends javax.swing.JFrame {
             int initialY = 0;
             
             for (File file : files) {
+                
                 JLabel label = new JLabel("");
                 label.setText(file.getName());
                 label.setName(file.getAbsolutePath());
                 label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
-                label.setBounds(panelObjetos.getX() + 5, initialY , 100, 25);  
-                label.addMouseListener(pp);
-                spritesDoPanel.add(label);
+                label.setBounds(panelObjetos.getX() + 5, initialY , 300, 25); 
                 
-//                label.addMouseMotionListener(ma);
+                label.addMouseListener(pp);
+                
+                spritesDoPanel.add(label);
+
                 panelObjetos.add((Component) label);
                              
                 DragSource ds = new DragSource();
-		ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl());
-                
+		ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl());               
                 initialY = initialY + 26;
-            }
-//            for (JLabel label: spritesDoPanel) {
-//                label.addMouseListener(pp);
-//            }
-            
+            }           
 
         } else {
             return;
@@ -528,6 +532,10 @@ public class Interface1 extends javax.swing.JFrame {
         panelObjetos.validate();
 
     }//GEN-LAST:event_btnImportSrpitesActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        new Scene(mainPanel);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -591,16 +599,16 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelPreview;
+    private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar mb1;
     private javax.swing.JMenuItem menu2;
     private javax.swing.JTabbedPane panel1;
     private javax.swing.JPanel panel2;
     private javax.swing.JPanel panelObjetos;
     private javax.swing.JPanel panelPreview;
-    private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelTiles;
+    private javax.swing.JScrollPane scrPreviewPanel;
     private javax.swing.JScrollPane scrpanel1;
     private javax.swing.JScrollPane scrpanel2;
     private javax.swing.JToolBar toolBar1;

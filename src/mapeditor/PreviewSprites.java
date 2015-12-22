@@ -32,7 +32,7 @@ public class PreviewSprites extends MouseAdapter implements MouseListener{
         
         imagePreview.setText(null);
         imagePreview.setIcon(new ImageIcon(label.getName()));
-        imagePreview.setBounds(imagePreview.getX(), imagePreview.getY(),
+        imagePreview.setBounds(imagePreview.getX()+imagePreview.getWidth()/2, imagePreview.getY()+imagePreview.getHeight()/2,
                                label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
         
     }

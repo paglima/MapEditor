@@ -1,4 +1,4 @@
-package mapeditor;
+package semUso;
 
 import java.awt.Component;
 import java.awt.Container;

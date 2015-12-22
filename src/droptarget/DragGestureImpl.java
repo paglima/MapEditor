@@ -10,7 +10,6 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
