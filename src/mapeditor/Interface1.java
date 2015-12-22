@@ -42,111 +42,36 @@ public class Interface1 extends javax.swing.JFrame {
     int larguraPainel = 200;
     int colunas = 1;
     int linhas = 0;
-    ComponentDragger dragger = new ComponentDragger();
-
+    
     // resopnsavel pela execução do drag and drop utilizando o mouse.
-    DragAndDrop dad = new DragAndDrop();
-    DragAndDropWithinPanel dadwp = new DragAndDropWithinPanel();
-    MouseMotionListener ma = new MouseMotionListener() {
+//    DragAndDrop dad = new DragAndDrop();
+    
+//    public JLabel createLabel() {
+//        //cria um label com um quadrado brando como icone.
+//        JLabel l1 = new JLabel();
+//        l1.setIcon(new ImageIcon(getClass().getResource("/imagens/whiteSquare.png")));
+//        //adicionando ao mouseListener para interagir como drag and drop
+//        l1.addMouseListener(dad);
+//        l1.setTransferHandler(new TransferHandler("icon"));
+//
+//        return l1;
+//    }
 
-        @Override
-        public void mouseDragged(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-
-//            label1.setLocation(e.getX() - 15, e.getY() - 15);
-        }
-    };
-    MouseListener ml = new MouseListener() {
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            Component component = e.getComponent();
-            component.setForeground(Color.red);
-            
-            spritesDoPanel.add(new JLabel(""));
-            spritesDoPanel.get(spritesDoPanel.size() - 1).setBounds(e.getX(), e.getY(), 48, 48);
-            for (int i = 0; i < imagensCarregadas.size(); i++) {
-                if (imagensCarregadas.get(i).getForeground() == Color.red) {
-                    spritesDoPanel.get(spritesDoPanel.size() - 1).setIcon(new ImageIcon(files.get(i).getAbsolutePath()));
-                    spritesDoPanel.get(spritesDoPanel.size() - 1).setForeground(Color.black);
-                }
-
-            }
-            spritesDoPanel.get(spritesDoPanel.size() - 1).setVisible(false);
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            spritesDoPanel.get(spritesDoPanel.size() - 1).setVisible(true);
-            panel2.add((Component) spritesDoPanel.get(spritesDoPanel.size() - 1));
-
-            spritesDoPanel.get(spritesDoPanel.size() - 1).removeMouseListener(ml);
-            spritesDoPanel.get(spritesDoPanel.size() - 1).removeMouseMotionListener(ma);
-            spritesDoPanel.get(spritesDoPanel.size() - 1).addMouseListener(dadwp);
-            spritesDoPanel.get(spritesDoPanel.size() - 1).addMouseMotionListener(dadwp);
-
-            panel2.removeMouseListener(ml);
-            panel2.removeMouseMotionListener(ma);
-            panel2.addMouseListener(dadwp);
-            panel2.addMouseMotionListener(dadwp);
-            panel2.repaint();
-            panel2.validate();
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-        }
-
-    };
-
-    public JLabel createLabel() {
-        //cria um label com um quadrado brando como icone.
-        JLabel l1 = new JLabel();
-        l1.setIcon(new ImageIcon(getClass().getResource("/imagens/whiteSquare.png")));
-        //adicionando ao mouseListener para interagir como drag and drop
-        l1.addMouseListener(dad);
-        l1.setTransferHandler(new TransferHandler("icon"));
-
-        return l1;
-    }
-
-    public void addLabelGrid() {
-        for (int i = 0; i < 100; i++) {
-            panel2.add(createLabel());
-        }
-
-    }
+//    public void addLabelGrid() {
+//        for (int i = 0; i < 100; i++) {
+//            panel2.add(createLabel());
+//        }
+//
+//    }
 
     public Interface1() {
         initComponents();
         DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
-        
- 
-        //addLabelGrid();
-//        panel2.addMouseListener(ml);
-//        panel2.setTransferHandler(new TransferHandler("icon"));
-
         panel2.setBackground(Color.white);
-        panel2.addMouseListener(ml);
-        panel2.addMouseMotionListener(ma);
+        panel2.addMouseListener(new ComponentDragger());
+        panel2.addMouseMotionListener(new ComponentDragger());
+        
 
-//        panelTiles.addMouseListener(dragger);
-//        panelTiles.addMouseMotionListener(dragger);
-//        panelObjetos.addMouseListener(dragger);
-//        panelObjetos.addMouseMotionListener(dragger);
     }
 
     /**
@@ -443,80 +368,83 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        // Abrindo o File Chooser
+// Tiles         
 
-        ImageIcon img = null;
 
-        File fileName = null;
-        final JFileChooser fc = new JFileChooser();
-        int response = fc.showOpenDialog(this);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            fileName = fc.getSelectedFile();
-            img = new ImageIcon(fileName.toString());
+// Abrindo o File Chooser
 
-        } else {
-            return;
-        }
-
-        // Adiciona um novo botão ao lado do botão de abrir conforme é aberto um nova imagem
-        botoes.add(new JButton(""));
-        botoes.get(botoes.size() - 1).setIcon(img);
-
-        // traça um limite para a lista de botões na horizontal
-        if (colunas > 3) {
-            colunas = 0;
-            linhas += 50;
-        }
-
-        // posiciona um botão ao lado do outro corretamente
-        botoes.get(botoes.size() - 1).setBounds(colunas * 50, linhas, 50, 50);
-        colunas++;
-        for (int i = 0; i < botoes.size(); i++) {
-            panelTiles.add((Component) botoes.get(i));
-
-            //Adicionando componentes que realizarão drag and drop
-            botoes.get(i).addMouseListener(dad);
-            botoes.get(i).setTransferHandler(new TransferHandler("icon"));
-
-        }
-        panelTiles.repaint();
-        panelTiles.validate();
-        System.out.println(botoes.size());
+//        ImageIcon img = null;
+//
+//        File fileName = null;
+//        final JFileChooser fc = new JFileChooser();
+//        int response = fc.showOpenDialog(this);
+//        if (response == JFileChooser.APPROVE_OPTION) {
+//            fileName = fc.getSelectedFile();
+//            img = new ImageIcon(fileName.toString());
+//
+//        } else {
+//            return;
+//        }
+//
+//        // Adiciona um novo botão ao lado do botão de abrir conforme é aberto um nova imagem
+//        botoes.add(new JButton(""));
+//        botoes.get(botoes.size() - 1).setIcon(img);
+//
+//        // traça um limite para a lista de botões na horizontal
+//        if (colunas > 3) {
+//            colunas = 0;
+//            linhas += 50;
+//        }
+//
+//        // posiciona um botão ao lado do outro corretamente
+//        botoes.get(botoes.size() - 1).setBounds(colunas * 50, linhas, 50, 50);
+//        colunas++;
+//        for (int i = 0; i < botoes.size(); i++) {
+//            panelTiles.add((Component) botoes.get(i));
+//
+//            //Adicionando componentes que realizarão drag and drop
+//            botoes.get(i).addMouseListener(dad);
+//            botoes.get(i).setTransferHandler(new TransferHandler("icon"));
+//
+//        }
+//        panelTiles.repaint();
+//        panelTiles.validate();
+//        System.out.println(botoes.size());
 
 
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btnSpriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpriteActionPerformed
-        ImageIcon img = null;
-
-        File fileName = null;
-        final JFileChooser fc = new JFileChooser();
-        int response = fc.showOpenDialog(this);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            fileName = fc.getSelectedFile();
-            img = new ImageIcon(fileName.toString());
-        } else {
-            return;
-        }
-
-        lblSprites.add(new JLabel(""));
-        lblSprites.get(lblSprites.size() - 1).setIcon(img);
-
-        lblSprites.get(lblSprites.size() - 1).setBounds(0, lblSprites.size() * 50, img.getIconWidth(), img.getIconHeight());
-
-        for (int i = 0; i < lblSprites.size(); i++) {
-//            panelObjetos.add((Component) lblSprites.get(i));
-            panel2.add((Component) lblSprites.get(i));
-
-            //Adicionando componentes que realizarão drag and drop
-//            lblSprites.get(i).addMouseListener(ml);
-//            lblSprites.get(i).setTransferHandler(new TransferHandler("icon"));
-        }
-//        panelObjetos.repaint();
-//        panelObjetos.validate();
-        panel2.repaint();
-        panel2.validate();
-        System.out.println(lblSprites.size());
+//        ImageIcon img = null;
+//
+//        File fileName = null;
+//        final JFileChooser fc = new JFileChooser();
+//        int response = fc.showOpenDialog(this);
+//        if (response == JFileChooser.APPROVE_OPTION) {
+//            fileName = fc.getSelectedFile();
+//            img = new ImageIcon(fileName.toString());
+//        } else {
+//            return;
+//        }
+//
+//        lblSprites.add(new JLabel(""));
+//        lblSprites.get(lblSprites.size() - 1).setIcon(img);
+//
+//        lblSprites.get(lblSprites.size() - 1).setBounds(0, lblSprites.size() * 50, img.getIconWidth(), img.getIconHeight());
+//
+//        for (int i = 0; i < lblSprites.size(); i++) {
+////            panelObjetos.add((Component) lblSprites.get(i));
+//            panel2.add((Component) lblSprites.get(i));
+//
+//            //Adicionando componentes que realizarão drag and drop
+////            lblSprites.get(i).addMouseListener(ml);
+////            lblSprites.get(i).setTransferHandler(new TransferHandler("icon"));
+//        }
+////        panelObjetos.repaint();
+////        panelObjetos.validate();
+//        panel2.repaint();
+//        panel2.validate();
+//        System.out.println(lblSprites.size());
 
     }//GEN-LAST:event_btnSpriteActionPerformed
 
@@ -525,25 +453,25 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_menu2ActionPerformed
 
     private void btnBackGroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackGroundActionPerformed
-        ImageIcon img = null;
-
-        File fileName = null;
-        final JFileChooser fc = new JFileChooser();
-        int response = fc.showOpenDialog(this);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            fileName = fc.getSelectedFile();
-            img = new ImageIcon(fileName.toString());
-        } else {
-            return;
-        }
-
-        JLabel background = new JLabel("");
-        background.setIcon(img);
-        background.setBounds(panel2.getBounds());
-
-        panel2.add((Component) background);
-        panel2.repaint();
-        panel2.validate();
+//        ImageIcon img = null;
+//
+//        File fileName = null;
+//        final JFileChooser fc = new JFileChooser();
+//        int response = fc.showOpenDialog(this);
+//        if (response == JFileChooser.APPROVE_OPTION) {
+//            fileName = fc.getSelectedFile();
+//            img = new ImageIcon(fileName.toString());
+//        } else {
+//            return;
+//        }
+//
+//        JLabel background = new JLabel("");
+//        background.setIcon(img);
+//        background.setBounds(panel2.getBounds());
+//
+//        panel2.add((Component) background);
+//        panel2.repaint();
+//        panel2.validate();
     }//GEN-LAST:event_btnBackGroundActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -577,8 +505,8 @@ public class Interface1 extends javax.swing.JFrame {
                 label.setName(file.getAbsolutePath());
                 label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
                 label.setBounds(panelObjetos.getX() + 5, initialY , 100, 25);
-                label.addMouseListener(ml);
-                label.addMouseMotionListener(ma);
+//                label.addMouseListener(ml);
+//                label.addMouseMotionListener(ma);
                 panelObjetos.add((Component) label);
                 filesNameImg.add(new LoadFiles(file.getName(), new ImageIcon(file.getAbsolutePath())));
                 
