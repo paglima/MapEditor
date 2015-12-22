@@ -1,6 +1,5 @@
 package droptarget;
 
-import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -29,6 +28,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             JLabel label = (JLabel) tr.getTransferData(dataFlavor);
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);
+                System.out.println("LOCATION"+ event.getLocation());
                 label.setBounds(event.getLocation().x, event.getLocation().x, label.getWidth(), label.getHeight());
                 this.panel.add(label);
                 this.panel.repaint();

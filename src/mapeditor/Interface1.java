@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mapeditor;
 
 import codebuilder.CodeBuilder;
@@ -10,6 +5,7 @@ import droptarget.DragGestureImpl;
 import droptarget.DropTargetImpl;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.awt.event.MouseEvent;
@@ -24,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.TransferHandler;
+import javax.swing.event.MouseInputListener;
 
 /**
  *
@@ -136,6 +133,37 @@ public class Interface1 extends javax.swing.JFrame {
     public Interface1() {
         initComponents();
         DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
+        
+        MouseListener mouL = new MouseListener() {
+
+            public Point point;
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                this.point = e.getLocationOnScreen();
+                System.out.println("On mouse" + e.getLocationOnScreen());
+            }
+            
+        };
+        
+        panel2.addMouseListener(mouL);
+        
         
         
         //addLabelGrid();
