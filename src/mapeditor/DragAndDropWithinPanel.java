@@ -20,13 +20,13 @@ public class DragAndDropWithinPanel implements MouseListener, MouseMotionListene
     
     @Override
     public void mouseDragged(MouseEvent e) {
-//         distancia percorrida pelo mouse
+//        distancia entre o click do mouse sobre o objeto e o dragging
         int dX = e.getX() - pressedX;
         int dY = e.getY() - pressedY;
         // atribuindo novo valor da distancia percorrido pelo mouse no componente
-        int newX = e.getComponent().getX() + dX;
-        int newY = e.getComponent().getY() + dY;
-        e.getComponent().setLocation(newX, newY);
+        int newX = e.getComponent().getX() + dX - e.getComponent().getWidth()/4;
+        int newY = e.getComponent().getY() + dY - e.getComponent().getHeight()/2;
+        e.getComponent().setLocation(newX , newY);
 
     }
 

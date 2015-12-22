@@ -68,8 +68,8 @@ public class Interface1 extends javax.swing.JFrame {
         initComponents();
         DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
         panel2.setBackground(Color.white);
-        panel2.addMouseListener(new ComponentDragger());
-        panel2.addMouseMotionListener(new ComponentDragger());
+//        panel2.addMouseListener(new ComponentDragger());
+//        panel2.addMouseMotionListener(new ComponentDragger());
         
 
     }

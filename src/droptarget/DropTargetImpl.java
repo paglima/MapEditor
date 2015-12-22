@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import mapeditor.ComponentDragger;
+import mapeditor.DragAndDropWithinPanel;
 
 public class DropTargetImpl extends DropTargetAdapter implements DropTargetListener {
 
@@ -27,9 +28,13 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
         DataFlavor dataFlavor = new DataFlavor(JLabel.class, JLabel.class.getSimpleName());
         try {
             Transferable tr = event.getTransferable();
+            
             JLabel label = (JLabel) tr.getTransferData(dataFlavor);
             label.setText(null);
             label.setIcon(new ImageIcon(label.getName()));
+            label.addMouseListener(new DragAndDropWithinPanel());
+            label.addMouseMotionListener(new DragAndDropWithinPanel());
+            
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);
                 
