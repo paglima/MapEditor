@@ -134,38 +134,7 @@ public class Interface1 extends javax.swing.JFrame {
         initComponents();
         DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
         
-        MouseListener mouL = new MouseListener() {
-
-            public Point point;
-            
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                this.point = e.getLocationOnScreen();
-                System.out.println("On mouse" + e.getLocationOnScreen());
-            }
-            
-        };
-        
-        panel2.addMouseListener(mouL);
-        
-        
-        
+ 
         //addLabelGrid();
 //        panel2.addMouseListener(ml);
 //        panel2.setTransferHandler(new TransferHandler("icon"));
@@ -605,7 +574,7 @@ public class Interface1 extends javax.swing.JFrame {
             for (File file : files) {
                 JLabel label = new JLabel("");
                 label.setText(file.getName());
-                label.setName(file.getName());
+                label.setName(file.getAbsolutePath());
                 label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
                 label.setBounds(panelObjetos.getX() + 5, initialY , 100, 25);
                 label.addMouseListener(ml);

@@ -7,6 +7,7 @@ import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -26,10 +27,12 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
         try {
             Transferable tr = event.getTransferable();
             JLabel label = (JLabel) tr.getTransferData(dataFlavor);
+            label.setText(null);
+            label.setIcon(new ImageIcon(label.getName()));
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);
                 System.out.println("LOCATION"+ event.getLocation());
-                label.setBounds(event.getLocation().x, event.getLocation().y, label.getWidth(), label.getHeight());
+                label.setBounds(event.getLocation().x, event.getLocation().y, 48, 48);
                 this.panel.add(label);
                 this.panel.repaint();
                 event.dropComplete(true);
