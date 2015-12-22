@@ -39,6 +39,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);
                 this.panel.add(label);
+                this.panel.repaint();
                 event.dropComplete(true);
                 this.panel.validate();
                 return;
