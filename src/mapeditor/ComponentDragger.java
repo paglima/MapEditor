@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mapeditor;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Frame;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class ComponentDragger extends MouseAdapter {
 
-     private Component target;
+    private Component target;
 
     /**
      * {@inheritDoc}
@@ -42,7 +31,7 @@ public class ComponentDragger extends MouseAdapter {
         if (target != null) {
             target.setBounds(e.getX(), e.getY(), target.getWidth(), target.getHeight());
             e.getComponent().repaint();
-            }
+        }
     }
 
     /**
@@ -53,5 +42,4 @@ public class ComponentDragger extends MouseAdapter {
         target = null;
     }
 
-    
 }
