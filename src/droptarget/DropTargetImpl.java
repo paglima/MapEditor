@@ -29,7 +29,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);
                 System.out.println("LOCATION"+ event.getLocation());
-                label.setBounds(event.getLocation().x, event.getLocation().x, label.getWidth(), label.getHeight());
+                label.setBounds(event.getLocation().x, event.getLocation().y, label.getWidth(), label.getHeight());
                 this.panel.add(label);
                 this.panel.repaint();
                 event.dropComplete(true);
