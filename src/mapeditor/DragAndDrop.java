@@ -31,7 +31,7 @@ public class DragAndDrop implements MouseListener, MouseMotionListener{
 //            JComponent jc = (JComponent) e.getSource();
 //            TransferHandler th = jc.getTransferHandler();
 //            th.exportAsDrag(jc, e, TransferHandler.COPY);
-            
+            //testando
         }
 
         
