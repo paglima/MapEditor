@@ -38,7 +38,7 @@ public class Interface1 extends javax.swing.JFrame {
     List<LoadFiles> filesNameImg = new ArrayList<>();
     List<JLabel> spritesDoPanel = new ArrayList<>();
     JLabel selecionado = new JLabel("");
-
+    PreviewSprites pp;
     int larguraPainel = 200;
     int colunas = 1;
     int linhas = 0;
@@ -64,8 +64,9 @@ public class Interface1 extends javax.swing.JFrame {
 //
 //    }
 
-    public Interface1() {
+    public Interface1() {        
         initComponents();
+        pp = new PreviewSprites(labelPreview);
         DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
         panel2.setBackground(Color.white);
 //        panel2.addMouseListener(new ComponentDragger());
@@ -104,6 +105,7 @@ public class Interface1 extends javax.swing.JFrame {
         btnBackGround = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         btnImportSrpites = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         panelPreview = new javax.swing.JPanel();
         labelPreview = new javax.swing.JLabel();
         mb1 = new javax.swing.JMenuBar();
@@ -232,24 +234,26 @@ public class Interface1 extends javax.swing.JFrame {
             }
         });
 
-        labelPreview.setText("jLabel1");
+        panelPreview.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout panelPreviewLayout = new javax.swing.GroupLayout(panelPreview);
         panelPreview.setLayout(panelPreviewLayout);
         panelPreviewLayout.setHorizontalGroup(
             panelPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPreviewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPreviewLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelPreviewLayout.setVerticalGroup(
             panelPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPreviewLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jScrollPane1.setViewportView(panelPreview);
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
@@ -258,13 +262,10 @@ public class Interface1 extends javax.swing.JFrame {
             .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                .addComponent(panelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(68, 68, 68))
-                            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                .addComponent(scrpanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrpanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(toolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -294,14 +295,13 @@ public class Interface1 extends javax.swing.JFrame {
                             .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnImportSrpites))))
                 .addGap(18, 18, 18)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addComponent(scrpanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(457, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
 
         scrpanel1.setViewportView(panelPrincipal);
@@ -504,16 +504,22 @@ public class Interface1 extends javax.swing.JFrame {
                 label.setText(file.getName());
                 label.setName(file.getAbsolutePath());
                 label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
-                label.setBounds(panelObjetos.getX() + 5, initialY , 100, 25);
-//                label.addMouseListener(ml);
+                label.setBounds(panelObjetos.getX() + 5, initialY , 100, 25);  
+                label.addMouseListener(pp);
+                spritesDoPanel.add(label);
+                
 //                label.addMouseMotionListener(ma);
                 panelObjetos.add((Component) label);
-                filesNameImg.add(new LoadFiles(file.getName(), new ImageIcon(file.getAbsolutePath())));
-                
+                             
                 DragSource ds = new DragSource();
 		ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl());
+                
                 initialY = initialY + 26;
             }
+//            for (JLabel label: spritesDoPanel) {
+//                label.addMouseListener(pp);
+//            }
+            
 
         } else {
             return;
@@ -585,6 +591,7 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelPreview;
     private javax.swing.JMenuBar mb1;
     private javax.swing.JMenuItem menu2;
