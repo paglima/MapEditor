@@ -38,11 +38,13 @@ public class Interface1 extends javax.swing.JFrame {
     List<File> files = new ArrayList<>();
     List<LoadFiles> filesNameImg = new ArrayList<>();
     List<JLabel> spritesDoPanel = new ArrayList<>();
+    List<JLabel> instanciasDoPanel = new ArrayList<>();
     JLabel selecionado = new JLabel("");
     PreviewSprites pp;
     int larguraPainel = 200;
     int colunas = 1;
     int linhas = 0;
+    int initialY = 0;
     
     // resopnsavel pela execução do drag and drop utilizando o mouse.
 //    DragAndDrop dad = new DragAndDrop();
@@ -69,7 +71,7 @@ public class Interface1 extends javax.swing.JFrame {
         initComponents();
         
         pp = new PreviewSprites(labelPreview);
-        DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2);
+        DropTargetImpl dropTargetImpl = new DropTargetImpl(panel2,instancePanel);
         panel2.setBackground(Color.white);
 //        panel2.addMouseListener(new ComponentDragger());
 //        panel2.addMouseMotionListener(new ComponentDragger());
@@ -91,10 +93,11 @@ public class Interface1 extends javax.swing.JFrame {
         scrpanel2 = new javax.swing.JScrollPane();
         panel1 = new javax.swing.JTabbedPane();
         panelObjetos = new javax.swing.JPanel();
+        instancePanel = new javax.swing.JPanel();
         panelTiles = new javax.swing.JPanel();
         btn1 = new javax.swing.JButton();
         toolBar1 = new javax.swing.JToolBar();
-        jButton8 = new javax.swing.JButton();
+        btnNewFile = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -134,6 +137,19 @@ public class Interface1 extends javax.swing.JFrame {
 
         panel1.addTab("Objects", panelObjetos);
 
+        javax.swing.GroupLayout instancePanelLayout = new javax.swing.GroupLayout(instancePanel);
+        instancePanel.setLayout(instancePanelLayout);
+        instancePanelLayout.setHorizontalGroup(
+            instancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 234, Short.MAX_VALUE)
+        );
+        instancePanelLayout.setVerticalGroup(
+            instancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 643, Short.MAX_VALUE)
+        );
+
+        panel1.addTab("Instancias", instancePanel);
+
         btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Open-folder-add-icon.png"))); // NOI18N
         btn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,13 +178,13 @@ public class Interface1 extends javax.swing.JFrame {
 
         toolBar1.setRollover(true);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Document-Blank-icon.png"))); // NOI18N
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnNewFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Document-Blank-icon.png"))); // NOI18N
+        btnNewFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnNewFileActionPerformed(evt);
             }
         });
-        toolBar1.add(jButton8);
+        toolBar1.add(btnNewFile);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/open-file-icon.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -504,7 +520,7 @@ public class Interface1 extends javax.swing.JFrame {
         if (response == JFileChooser.APPROVE_OPTION) {
             files = Arrays.asList(fc.getSelectedFiles());
 
-            int initialY = 0;
+            
             
             for (File file : files) {
                 
@@ -521,7 +537,7 @@ public class Interface1 extends javax.swing.JFrame {
                 panelObjetos.add((Component) label);
                              
                 DragSource ds = new DragSource();
-		ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl());               
+		ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl(labelPreview));               
                 initialY = initialY + 26;
             }           
 
@@ -533,9 +549,9 @@ public class Interface1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnImportSrpitesActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnNewFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewFileActionPerformed
         new Scene(mainPanel);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnNewFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -584,7 +600,9 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JButton btn1;
     private javax.swing.JButton btnBackGround;
     private javax.swing.JButton btnImportSrpites;
+    private javax.swing.JButton btnNewFile;
     private javax.swing.JButton btnSprite;
+    private javax.swing.JPanel instancePanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
@@ -593,7 +611,6 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

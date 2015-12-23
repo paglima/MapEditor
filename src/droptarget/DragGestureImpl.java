@@ -10,6 +10,7 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
@@ -18,10 +19,24 @@ import javax.swing.JLabel;
  */
 public class DragGestureImpl implements DragGestureListener {
     
+    JLabel imagePreview;
+    
+    
+    public DragGestureImpl(JLabel imagePreview){
+        this.imagePreview=imagePreview;
+    }
+    
+    
     @Override
     public void dragGestureRecognized(DragGestureEvent event) {
         Cursor cursor = null;
         JLabel label = (JLabel) event.getComponent();
+        
+        imagePreview.setText(null);
+        imagePreview.setIcon(new ImageIcon(label.getName()));
+        imagePreview.setBounds(imagePreview.getX()+imagePreview.getWidth()/2, imagePreview.getY()+imagePreview.getHeight()/2,
+                               label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
+        
         
         if (event.getDragAction() == DnDConstants.ACTION_COPY) {
             cursor = DragSource.DefaultCopyDrop;

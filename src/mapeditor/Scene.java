@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  *
  * @author Leandro
  */
-public class Scene {
+public class Scene extends SceneFrame{
     
     JPanel mainPanel;
     
