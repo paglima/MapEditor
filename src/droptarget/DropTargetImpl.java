@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import mapeditor.DragAndDropWithinPanel;
 
 public class DropTargetImpl extends DropTargetAdapter implements DropTargetListener {
 
@@ -35,8 +34,10 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             Transferable tr = event.getTransferable();
             
             JLabel label = (JLabel) tr.getTransferData(dataFlavor);
+            ImageIcon path = (ImageIcon)label.getIcon();
+
             label.setText(null);
-            label.setIcon(new ImageIcon(label.getName()));
+            label.setIcon(new ImageIcon(path.getDescription()));
             
             label.addMouseListener(new DragAndDropWithinPanel());
             label.addMouseMotionListener(new DragAndDropWithinPanel());

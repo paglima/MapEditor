@@ -33,7 +33,8 @@ public class DragGestureImpl implements DragGestureListener {
         JLabel label = (JLabel) event.getComponent();
         
         imagePreview.setText(null);
-        imagePreview.setIcon(new ImageIcon(label.getName()));
+        ImageIcon path = (ImageIcon)label.getIcon();
+        imagePreview.setIcon(new ImageIcon(path.getDescription()));
         imagePreview.setBounds(imagePreview.getX()+imagePreview.getWidth()/2, imagePreview.getY()+imagePreview.getHeight()/2,
                                label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
         

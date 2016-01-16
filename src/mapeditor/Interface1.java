@@ -1,29 +1,33 @@
 package mapeditor;
 
+import droptarget.DragAndDropWithinPanel;
 import semUso.LoadFiles;
 import codebuilder.CodeBuilder;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 import droptarget.DragGestureImpl;
 import droptarget.DropTargetImpl;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import json.JsonLabel;
+import json.JsonParser;
 
 /**
  *
@@ -443,37 +447,33 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btnSpriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpriteActionPerformed
-        ImageIcon img = null;
-
-        File fileName = null;
-        final JFileChooser fc = new JFileChooser();
-        int response = fc.showOpenDialog(this);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            fileName = fc.getSelectedFile();
-            img = new ImageIcon(fileName.toString());
-        } else {
-            return;
+        JFileChooser fs = new JFileChooser();
+        fs.setDialogTitle("Salve o json de estado");
+        fs.setFileFilter(new FileNameExtensionFilter("json files (*.json)","json"));
+        
+        int result = fs.showSaveDialog(null);
+        if(result == JFileChooser.APPROVE_OPTION){
+            try {
+                FileWriter fw = new FileWriter(fs.getSelectedFile().getPath());
+                JsonParser jp = new JsonParser(fw);
+                jp.write(editionPanel.getComponents());
+            } catch (IOException ex) {
+                Logger.getLogger(Interface1.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-//
-//        lblSprites.add(new JLabel(""));
-//        lblSprites.get(lblSprites.size() - 1).setIcon(img);
-//
-//        lblSprites.get(lblSprites.size() - 1).setBounds(0, lblSprites.size() * 50, img.getIconWidth(), img.getIconHeight());
-//
-//        for (int i = 0; i < lblSprites.size(); i++) {
-////            panelObjetos.add((Component) lblSprites.get(i));
-//            panel2.add((Component) lblSprites.get(i));
-//
-//            //Adicionando componentes que realizarão drag and drop
-////            lblSprites.get(i).addMouseListener(ml);
-////            lblSprites.get(i).setTransferHandler(new TransferHandler("icon"));
-//        }
-////        panelObjetos.repaint();
-////        panelObjetos.validate();
-//        panel2.repaint();
-//        panel2.validate();
-//        System.out.println(lblSprites.size());
+        
+        
+        CodeBuilder cb = new CodeBuilder();
+        List<Component> components = Arrays.asList(editionPanel.getComponents());
 
+        int count = 0;
+        for (Component component : components) {
+            JLabel label = (JLabel) component;
+            label.setName("sprite" + (++count));
+            cb.mountCode(label);
+        }
+
+        cb.generateFile();
     }//GEN-LAST:event_btnSpriteActionPerformed
 
     private void menu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu2ActionPerformed
@@ -538,10 +538,10 @@ public class Interface1 extends javax.swing.JFrame {
 
             for (File file : files) {
                 
-                JLabel label = new JLabel("");
+                JLabel label = new JLabel();
+                label.setName(file.getName());
                 label.setText(file.getName());
-                label.setName(file.getAbsolutePath());
-                label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
+                label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png"), file.getAbsolutePath()));
                 label.setBounds(panelObjetos.getX() + 5, initialY , 300, 25); 
                 label.addMouseListener(pp);
                 
