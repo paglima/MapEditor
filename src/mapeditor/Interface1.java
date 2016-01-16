@@ -2,26 +2,28 @@ package mapeditor;
 
 import semUso.LoadFiles;
 import codebuilder.CodeBuilder;
+import com.google.gson.Gson;
 import droptarget.DragGestureImpl;
 import droptarget.DropTargetImpl;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.TransferHandler;
-import javax.swing.event.MouseInputListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import json.JsonLabel;
 
 /**
  *
@@ -213,8 +215,7 @@ public class Interface1 extends javax.swing.JFrame {
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Data-Grid-icon.png"))); // NOI18N
         toolBar1.add(jButton7);
 
-        btnSprite.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Grass-icon48x48.png"))); // NOI18N
-        btnSprite.setText("Add Sprites");
+        btnSprite.setText("Save");
         btnSprite.setPreferredSize(new java.awt.Dimension(48, 48));
         btnSprite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,8 +223,7 @@ public class Interface1 extends javax.swing.JFrame {
             }
         });
 
-        btnBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/terreno1.png"))); // NOI18N
-        btnBackGround.setText("Add Background");
+        btnBackGround.setText("Load");
         btnBackGround.setPreferredSize(new java.awt.Dimension(48, 48));
         btnBackGround.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,13 +297,14 @@ public class Interface1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
                         .addComponent(btnImportSrpites)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(482, Short.MAX_VALUE))
         );
@@ -315,12 +316,12 @@ public class Interface1 extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(toolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(28, 28, 28)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnImportSrpites))))
+                            .addComponent(btnImportSrpites, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton10))))
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
@@ -442,17 +443,17 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btnSpriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpriteActionPerformed
-//        ImageIcon img = null;
-//
-//        File fileName = null;
-//        final JFileChooser fc = new JFileChooser();
-//        int response = fc.showOpenDialog(this);
-//        if (response == JFileChooser.APPROVE_OPTION) {
-//            fileName = fc.getSelectedFile();
-//            img = new ImageIcon(fileName.toString());
-//        } else {
-//            return;
-//        }
+        ImageIcon img = null;
+
+        File fileName = null;
+        final JFileChooser fc = new JFileChooser();
+        int response = fc.showOpenDialog(this);
+        if (response == JFileChooser.APPROVE_OPTION) {
+            fileName = fc.getSelectedFile();
+            img = new ImageIcon(fileName.toString());
+        } else {
+            return;
+        }
 //
 //        lblSprites.add(new JLabel(""));
 //        lblSprites.get(lblSprites.size() - 1).setIcon(img);
@@ -480,25 +481,36 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_menu2ActionPerformed
 
     private void btnBackGroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackGroundActionPerformed
-//        ImageIcon img = null;
-//
-//        File fileName = null;
-//        final JFileChooser fc = new JFileChooser();
-//        int response = fc.showOpenDialog(this);
-//        if (response == JFileChooser.APPROVE_OPTION) {
-//            fileName = fc.getSelectedFile();
-//            img = new ImageIcon(fileName.toString());
-//        } else {
-//            return;
-//        }
-//
-//        JLabel background = new JLabel("");
-//        background.setIcon(img);
-//        background.setBounds(panel2.getBounds());
-//
-//        panel2.add((Component) background);
-//        panel2.repaint();
-//        panel2.validate();
+        try {
+            ImageIcon img = null;
+            File file = null;
+            FileNameExtensionFilter jsonFilter = new FileNameExtensionFilter("json files (*.json)","json");
+            final JFileChooser fc = new JFileChooser();
+            fc.setFileFilter(jsonFilter);
+            int response = fc.showOpenDialog(this);
+            if (response == JFileChooser.APPROVE_OPTION) {
+                file = fc.getSelectedFile();
+                img = new ImageIcon(file.toString());
+            } else {
+                return;
+            }
+            Gson gson = new Gson();
+            List<JsonLabel> jsonLabels =  Arrays.asList( gson.fromJson(new FileReader(file), JsonLabel[].class));
+            
+            for (JsonLabel jsonLabel : jsonLabels) {
+                JLabel sprite = new JLabel(jsonLabel.getName());
+                sprite.setIcon(new ImageIcon(jsonLabel.getPath()));
+                sprite.setBounds(jsonLabel.getPositionX(), jsonLabel.getPositionY(),sprite.getIcon().getIconWidth(), sprite.getIcon().getIconHeight());
+                sprite.addMouseListener(new DragAndDropWithinPanel());
+                sprite.addMouseMotionListener(new DragAndDropWithinPanel());
+                editionPanel.add((Component)sprite);
+            }
+            
+            editionPanel.repaint();
+            editionPanel.validate();
+        } catch (Exception ex) {
+            //error
+        }
     }//GEN-LAST:event_btnBackGroundActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -524,8 +536,6 @@ public class Interface1 extends javax.swing.JFrame {
         if (response == JFileChooser.APPROVE_OPTION) {
             files = Arrays.asList(fc.getSelectedFiles());
 
-            
-            
             for (File file : files) {
                 
                 JLabel label = new JLabel("");
@@ -533,11 +543,8 @@ public class Interface1 extends javax.swing.JFrame {
                 label.setName(file.getAbsolutePath());
                 label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png")));
                 label.setBounds(panelObjetos.getX() + 5, initialY , 300, 25); 
-                
                 label.addMouseListener(pp);
                 
-                spritesDoPanel.add(label);
-
                 panelObjetos.add((Component) label);
                              
                 DragSource ds = new DragSource();
