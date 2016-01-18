@@ -30,8 +30,11 @@ public class PreviewSprites extends MouseAdapter implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         JLabel label = (JLabel) e.getComponent();
         
+        ImageIcon path = (ImageIcon)label.getIcon();
+        
+        imagePreview.setIcon(new ImageIcon(path.getDescription()));      
         imagePreview.setText(null);
-        imagePreview.setIcon(new ImageIcon(label.getName()));
+//        imagePreview.setIcon(new ImageIcon(label.getName()));
         imagePreview.setBounds(imagePreview.getX()+imagePreview.getWidth()/2, imagePreview.getY()+imagePreview.getHeight()/2,
                                label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
         

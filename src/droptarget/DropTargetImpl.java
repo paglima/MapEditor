@@ -7,6 +7,7 @@ import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -45,9 +46,9 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             numInstancias++;
             
             JLabel instancia = new JLabel();
-            instancia.setText("Sprite"+numInstancias);
+            instancia.setText(label.getName()+numInstancias);
             instancia.setBounds(instancePanel.getX()+5, initialY, 300, 25);
-            instancePanel.add(instancia);
+            instancePanel.add(instancia);         
             initialY+=20;
             
             instancePanel.repaint();
@@ -58,6 +59,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
                 
                 label.setBounds(event.getLocation().x, event.getLocation().y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());          
                 this.panel.add(label);
+//                instances.add(label);
                 this.panel.repaint();
                 event.dropComplete(true);
                 this.panel.validate();

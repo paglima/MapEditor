@@ -44,9 +44,10 @@ public class Interface1 extends javax.swing.JFrame {
     List<File> files = new ArrayList<>();
     List<LoadFiles> filesNameImg = new ArrayList<>();
     List<JLabel> spritesDoPanel = new ArrayList<>();
-    List<JLabel> instanciasDoPanel = new ArrayList<>();
     JLabel selecionado = new JLabel("");
     PreviewSprites pp;
+    Zoom zoom;
+    
     int larguraPainel = 200;
     int colunas = 1;
     int linhas = 0;
@@ -78,6 +79,7 @@ public class Interface1 extends javax.swing.JFrame {
         
         pp = new PreviewSprites(labelPreview);
         DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel,instancePanel);
+        
         editionPanel.setBackground(Color.white);
 //        panel2.addMouseListener(new ComponentDragger());
 //        panel2.addMouseMotionListener(new ComponentDragger());
@@ -94,10 +96,10 @@ public class Interface1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        scrpanel1 = new javax.swing.JScrollPane();
+        scrMainPanel = new javax.swing.JScrollPane();
         mainPanel = new javax.swing.JPanel();
-        scrpanel2 = new javax.swing.JScrollPane();
-        panel1 = new javax.swing.JTabbedPane();
+        scrObjectsPanel = new javax.swing.JScrollPane();
+        objectsPanel = new javax.swing.JTabbedPane();
         panelObjetos = new javax.swing.JPanel();
         instancePanel = new javax.swing.JPanel();
         panelTiles = new javax.swing.JPanel();
@@ -108,12 +110,12 @@ public class Interface1 extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnZoomOut = new javax.swing.JButton();
+        btnZoomIn = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        btnSprite = new javax.swing.JButton();
-        btnBackGround = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnLoad = new javax.swing.JButton();
+        btnCompile = new javax.swing.JButton();
         btnImportSrpites = new javax.swing.JButton();
         scrPreviewPanel = new javax.swing.JScrollPane();
         panelPreview = new javax.swing.JPanel();
@@ -142,7 +144,7 @@ public class Interface1 extends javax.swing.JFrame {
             .addGap(0, 643, Short.MAX_VALUE)
         );
 
-        panel1.addTab("Objects", panelObjetos);
+        objectsPanel.addTab("Objects", panelObjetos);
 
         javax.swing.GroupLayout instancePanelLayout = new javax.swing.GroupLayout(instancePanel);
         instancePanel.setLayout(instancePanelLayout);
@@ -155,7 +157,7 @@ public class Interface1 extends javax.swing.JFrame {
             .addGap(0, 643, Short.MAX_VALUE)
         );
 
-        panel1.addTab("Instancias", instancePanel);
+        objectsPanel.addTab("Instancias", instancePanel);
 
         btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Open-folder-add-icon.png"))); // NOI18N
         btn1.addActionListener(new java.awt.event.ActionListener() {
@@ -179,9 +181,9 @@ public class Interface1 extends javax.swing.JFrame {
                 .addGap(0, 593, Short.MAX_VALUE))
         );
 
-        panel1.addTab("Tiles", panelTiles);
+        objectsPanel.addTab("Tiles", panelTiles);
 
-        scrpanel2.setViewportView(panel1);
+        scrObjectsPanel.setViewportView(objectsPanel);
 
         toolBar1.setRollover(true);
 
@@ -210,35 +212,45 @@ public class Interface1 extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Redo-icon.png"))); // NOI18N
         toolBar1.add(jButton4);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Zoom-Out-icon.png"))); // NOI18N
-        toolBar1.add(jButton5);
+        btnZoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Zoom-Out-icon.png"))); // NOI18N
+        btnZoomOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnZoomOutActionPerformed(evt);
+            }
+        });
+        toolBar1.add(btnZoomOut);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Zoom-In-icon.png"))); // NOI18N
-        toolBar1.add(jButton6);
+        btnZoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Zoom-In-icon.png"))); // NOI18N
+        btnZoomIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnZoomInActionPerformed(evt);
+            }
+        });
+        toolBar1.add(btnZoomIn);
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Data-Grid-icon.png"))); // NOI18N
         toolBar1.add(jButton7);
 
-        btnSprite.setText("Save");
-        btnSprite.setPreferredSize(new java.awt.Dimension(48, 48));
-        btnSprite.addActionListener(new java.awt.event.ActionListener() {
+        btnSave.setText("Save");
+        btnSave.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSpriteActionPerformed(evt);
+                btnSaveActionPerformed(evt);
             }
         });
 
-        btnBackGround.setText("Load");
-        btnBackGround.setPreferredSize(new java.awt.Dimension(48, 48));
-        btnBackGround.addActionListener(new java.awt.event.ActionListener() {
+        btnLoad.setText("Load");
+        btnLoad.setPreferredSize(new java.awt.Dimension(48, 48));
+        btnLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackGroundActionPerformed(evt);
+                btnLoadActionPerformed(evt);
             }
         });
 
-        jButton10.setText("Compile ");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnCompile.setText("Compile ");
+        btnCompile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnCompileActionPerformed(evt);
             }
         });
 
@@ -257,7 +269,7 @@ public class Interface1 extends javax.swing.JFrame {
             panelPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPreviewLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelPreviewLayout.setVerticalGroup(
@@ -294,21 +306,22 @@ public class Interface1 extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(toolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scrpanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(scrPreviewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(scrPreviewPanel))
+                        .addComponent(scrObjectsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(btnImportSrpites)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(btnBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnCompile, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(482, Short.MAX_VALUE))
         );
@@ -323,20 +336,20 @@ public class Interface1 extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnImportSrpites, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton10))))
+                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCompile))))
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(scrpanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrObjectsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(scrPreviewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(369, Short.MAX_VALUE))
         );
 
-        scrpanel1.setViewportView(mainPanel);
+        scrMainPanel.setViewportView(mainPanel);
 
         jMenu1.setText("Arquivo");
 
@@ -378,13 +391,13 @@ public class Interface1 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrpanel1)
+            .addComponent(scrMainPanel)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrpanel1))
+                .addComponent(scrMainPanel))
         );
 
         pack();
@@ -446,7 +459,7 @@ public class Interface1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn1ActionPerformed
 
-    private void btnSpriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpriteActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         JFileChooser fs = new JFileChooser();
         fs.setDialogTitle("Salve o json de estado");
         fs.setFileFilter(new FileNameExtensionFilter("json files (*.json)","json"));
@@ -474,13 +487,13 @@ public class Interface1 extends javax.swing.JFrame {
         }
 
         cb.generateFile();
-    }//GEN-LAST:event_btnSpriteActionPerformed
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void menu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu2ActionPerformed
 
     }//GEN-LAST:event_menu2ActionPerformed
 
-    private void btnBackGroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackGroundActionPerformed
+    private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
         try {
             ImageIcon img = null;
             File file = null;
@@ -511,9 +524,9 @@ public class Interface1 extends javax.swing.JFrame {
         } catch (Exception ex) {
             //error
         }
-    }//GEN-LAST:event_btnBackGroundActionPerformed
+    }//GEN-LAST:event_btnLoadActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
         CodeBuilder cb = new CodeBuilder();
         List<Component> components = Arrays.asList(editionPanel.getComponents());
 
@@ -526,7 +539,7 @@ public class Interface1 extends javax.swing.JFrame {
 
         cb.generateFile();
 
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnCompileActionPerformed
 
     private void btnImportSrpitesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportSrpitesActionPerformed
 
@@ -563,6 +576,16 @@ public class Interface1 extends javax.swing.JFrame {
     private void btnNewFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewFileActionPerformed
         new Scene(editionPanel,scrEditionPane);
     }//GEN-LAST:event_btnNewFileActionPerformed
+
+    private void btnZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomInActionPerformed
+        zoom = new Zoom(editionPanel);
+        zoom.zoomIn();
+    }//GEN-LAST:event_btnZoomInActionPerformed
+
+    private void btnZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomOutActionPerformed
+        zoom = new Zoom(editionPanel);
+        zoom.zoomOut();
+    }//GEN-LAST:event_btnZoomOutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -609,19 +632,19 @@ public class Interface1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Menu1;
     private javax.swing.JButton btn1;
-    private javax.swing.JButton btnBackGround;
+    private javax.swing.JButton btnCompile;
     private javax.swing.JButton btnImportSrpites;
+    private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnNewFile;
-    private javax.swing.JButton btnSprite;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnZoomIn;
+    private javax.swing.JButton btnZoomOut;
     private javax.swing.JPanel editionPanel;
     private javax.swing.JPanel instancePanel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -632,14 +655,14 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar mb1;
     private javax.swing.JMenuItem menu2;
-    private javax.swing.JTabbedPane panel1;
+    private javax.swing.JTabbedPane objectsPanel;
     private javax.swing.JPanel panelObjetos;
     private javax.swing.JPanel panelPreview;
     private javax.swing.JPanel panelTiles;
     private javax.swing.JScrollPane scrEditionPane;
+    private javax.swing.JScrollPane scrMainPanel;
+    private javax.swing.JScrollPane scrObjectsPanel;
     private javax.swing.JScrollPane scrPreviewPanel;
-    private javax.swing.JScrollPane scrpanel1;
-    private javax.swing.JScrollPane scrpanel2;
     private javax.swing.JToolBar toolBar1;
     // End of variables declaration//GEN-END:variables
 }
