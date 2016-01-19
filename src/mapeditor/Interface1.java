@@ -578,12 +578,12 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNewFileActionPerformed
 
     private void btnZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomInActionPerformed
-        zoom = new Zoom(editionPanel);
+        zoom = new Zoom(editionPanel,scrEditionPane);
         zoom.zoomIn();
     }//GEN-LAST:event_btnZoomInActionPerformed
 
     private void btnZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomOutActionPerformed
-        zoom = new Zoom(editionPanel);
+        zoom = new Zoom(editionPanel,scrEditionPane);
         zoom.zoomOut();
     }//GEN-LAST:event_btnZoomOutActionPerformed
 
