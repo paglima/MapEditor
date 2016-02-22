@@ -78,7 +78,7 @@ public class Interface1 extends javax.swing.JFrame {
         initComponents();
         
         pp = new PreviewSprites(labelPreview);
-        DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel,instancePanel);
+        DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel,instancePanel,actionsPanel);
         
         editionPanel.setBackground(Color.white);
 //        panel2.addMouseListener(new ComponentDragger());
@@ -122,6 +122,9 @@ public class Interface1 extends javax.swing.JFrame {
         labelPreview = new javax.swing.JLabel();
         scrEditionPane = new javax.swing.JScrollPane();
         editionPanel = new javax.swing.JPanel();
+        actionsPanel = new javax.swing.JPanel();
+        btnTranslate = new javax.swing.JToggleButton();
+        btnRotate = new javax.swing.JToggleButton();
         mb1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Menu1 = new javax.swing.JMenuItem();
@@ -299,6 +302,34 @@ public class Interface1 extends javax.swing.JFrame {
 
         scrEditionPane.setViewportView(editionPanel);
 
+        actionsPanel.setBackground(new java.awt.Color(204, 204, 204));
+        actionsPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btnTranslate.setText("Translate");
+
+        btnRotate.setText("Rotate");
+
+        javax.swing.GroupLayout actionsPanelLayout = new javax.swing.GroupLayout(actionsPanel);
+        actionsPanel.setLayout(actionsPanelLayout);
+        actionsPanelLayout.setHorizontalGroup(
+            actionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(actionsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnTranslate, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRotate)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        actionsPanelLayout.setVerticalGroup(
+            actionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(actionsPanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(actionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTranslate)
+                    .addComponent(btnRotate))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -313,16 +344,18 @@ public class Interface1 extends javax.swing.JFrame {
                         .addComponent(scrObjectsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(26, 26, 26)
                         .addComponent(btnImportSrpites)
-                        .addGap(18, 18, 18)
+                        .addGap(58, 58, 58)
+                        .addComponent(actionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnCompile, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCompile, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(482, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -334,12 +367,17 @@ public class Interface1 extends javax.swing.JFrame {
                         .addComponent(toolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
+                        .addComponent(btnImportSrpites, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnImportSrpites, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCompile))))
-                .addGap(18, 18, 18)
+                            .addComponent(btnCompile)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(actionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(scrObjectsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -631,12 +669,15 @@ public class Interface1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Menu1;
+    private javax.swing.JPanel actionsPanel;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btnCompile;
     private javax.swing.JButton btnImportSrpites;
     private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnNewFile;
+    private javax.swing.JToggleButton btnRotate;
     private javax.swing.JButton btnSave;
+    private javax.swing.JToggleButton btnTranslate;
     private javax.swing.JButton btnZoomIn;
     private javax.swing.JButton btnZoomOut;
     private javax.swing.JPanel editionPanel;

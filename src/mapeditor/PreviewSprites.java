@@ -29,7 +29,7 @@ public class PreviewSprites extends MouseAdapter implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         JLabel label = (JLabel) e.getComponent();
-        
+    
         ImageIcon path = (ImageIcon)label.getIcon();
         
         imagePreview.setIcon(new ImageIcon(path.getDescription()));      
