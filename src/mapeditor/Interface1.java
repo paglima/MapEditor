@@ -317,9 +317,16 @@ public class Interface1 extends javax.swing.JFrame {
 
         btnTranslate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/move-icon.png"))); // NOI18N
         btnTranslate.setToolTipText("Movimenta imagem/sprite");
+        btnTranslate.setName("Translate"); // NOI18N
+        btnTranslate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTranslateActionPerformed(evt);
+            }
+        });
 
         btnRotate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Actions-transform-rotate-icon.png"))); // NOI18N
         btnRotate.setToolTipText("Rotaciona imagem/sprite");
+        btnRotate.setName("Rotate"); // NOI18N
 
         jLabel1.setText("Translate");
 
@@ -646,6 +653,10 @@ public class Interface1 extends javax.swing.JFrame {
 
         cb.generateFile();
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnTranslateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTranslateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTranslateActionPerformed
 
     /**
      * @param args the command line arguments
