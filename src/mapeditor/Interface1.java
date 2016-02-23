@@ -7,10 +7,13 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
 import droptarget.DragGestureImpl;
 import droptarget.DropTargetImpl;
+import droptarget.HandleEditionScene;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -25,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import json.JsonLabel;
 import json.JsonParser;
@@ -47,15 +51,16 @@ public class Interface1 extends javax.swing.JFrame {
     JLabel selecionado = new JLabel("");
     PreviewSprites pp;
     Zoom zoom;
-    
+    DragAndDropWithinPanel dadwp = new DragAndDropWithinPanel();
+    HandleEditionScene hes;
+
     int larguraPainel = 200;
     int colunas = 1;
     int linhas = 0;
     int initialY = 0;
-    
+
     // resopnsavel pela execução do drag and drop utilizando o mouse.
 //    DragAndDrop dad = new DragAndDrop();
-    
 //    public JLabel createLabel() {
 //        //cria um label com um quadrado brando como icone.
 //        JLabel l1 = new JLabel();
@@ -66,24 +71,21 @@ public class Interface1 extends javax.swing.JFrame {
 //
 //        return l1;
 //    }
-
 //    public void addLabelGrid() {
 //        for (int i = 0; i < 100; i++) {
 //            panel2.add(createLabel());
 //        }
 //
 //    }
-
-    public Interface1() {        
+    public Interface1() {
         initComponents();
-        
+
         pp = new PreviewSprites(labelPreview);
-        DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel,instancePanel,actionsPanel);
-        
+        DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel, instancePanel);
+        hes = new HandleEditionScene(actionsPanel, editionPanel, instancePanel, resourcesPanel);
         editionPanel.setBackground(Color.white);
 //        panel2.addMouseListener(new ComponentDragger());
 //        panel2.addMouseMotionListener(new ComponentDragger());
-        
 
     }
 
@@ -254,7 +256,7 @@ public class Interface1 extends javax.swing.JFrame {
 
         btnTranslate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/move-icon.png"))); // NOI18N
         btnTranslate.setToolTipText("Movimenta imagem/sprite");
-        btnTranslate.setName("Translate"); // NOI18N
+        btnTranslate.setName("btnTranslate"); // NOI18N
         btnTranslate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTranslateActionPerformed(evt);
@@ -263,14 +265,21 @@ public class Interface1 extends javax.swing.JFrame {
 
         btnRotate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Actions-transform-rotate-icon.png"))); // NOI18N
         btnRotate.setToolTipText("Rotaciona imagem/sprite");
-        btnRotate.setName("Rotate"); // NOI18N
+        btnRotate.setName("btnRotate"); // NOI18N
 
         labeltranslate.setText("Translate");
 
         labelRotate.setText("Rotate");
+        labelRotate.setName(""); // NOI18N
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/image-remove-icon.png"))); // NOI18N
         btnDelete.setToolTipText("Deleta imagem/sprite");
+        btnDelete.setName("btnDelete"); // NOI18N
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         labelDelete.setText("Delete");
 
@@ -353,6 +362,11 @@ public class Interface1 extends javax.swing.JFrame {
 
         btnClearScene.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/empty-icon.png"))); // NOI18N
         btnClearScene.setToolTipText("Limpar Cenário");
+        btnClearScene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearSceneActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout resourcesPanelLayout = new javax.swing.GroupLayout(resourcesPanel);
         resourcesPanel.setLayout(resourcesPanelLayout);
@@ -546,7 +560,7 @@ public class Interface1 extends javax.swing.JFrame {
         try {
             ImageIcon img = null;
             File file = null;
-            FileNameExtensionFilter jsonFilter = new FileNameExtensionFilter("json files (*.json)","json");
+            FileNameExtensionFilter jsonFilter = new FileNameExtensionFilter("json files (*.json)", "json");
             final JFileChooser fc = new JFileChooser();
             fc.setFileFilter(jsonFilter);
             int response = fc.showOpenDialog(this);
@@ -557,17 +571,17 @@ public class Interface1 extends javax.swing.JFrame {
                 return;
             }
             Gson gson = new Gson();
-            List<JsonLabel> jsonLabels =  Arrays.asList( gson.fromJson(new FileReader(file), JsonLabel[].class));
-            
+            List<JsonLabel> jsonLabels = Arrays.asList(gson.fromJson(new FileReader(file), JsonLabel[].class));
+
             for (JsonLabel jsonLabel : jsonLabels) {
                 JLabel sprite = new JLabel(jsonLabel.getName());
                 sprite.setIcon(new ImageIcon(jsonLabel.getPath()));
-                sprite.setBounds(jsonLabel.getPositionX(), jsonLabel.getPositionY(),sprite.getIcon().getIconWidth(), sprite.getIcon().getIconHeight());
+                sprite.setBounds(jsonLabel.getPositionX(), jsonLabel.getPositionY(), sprite.getIcon().getIconWidth(), sprite.getIcon().getIconHeight());
                 sprite.addMouseListener(new DragAndDropWithinPanel());
                 sprite.addMouseMotionListener(new DragAndDropWithinPanel());
-                editionPanel.add((Component)sprite);
+                editionPanel.add((Component) sprite);
             }
-            
+
             editionPanel.repaint();
             editionPanel.validate();
         } catch (Exception ex) {
@@ -579,9 +593,7 @@ public class Interface1 extends javax.swing.JFrame {
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
 // Tiles         
 
-
 // Abrindo o File Chooser
-
 //        ImageIcon img = null;
 //
 //        File fileName = null;
@@ -620,7 +632,6 @@ public class Interface1 extends javax.swing.JFrame {
 //        panelTiles.validate();
 //        System.out.println(botoes.size());
 
-
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void menu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu2ActionPerformed
@@ -651,20 +662,20 @@ public class Interface1 extends javax.swing.JFrame {
             files = Arrays.asList(fc.getSelectedFiles());
 
             for (File file : files) {
-                
+
                 JLabel label = new JLabel();
                 label.setName(file.getName());
                 label.setText(file.getName());
                 label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png"), file.getAbsolutePath()));
-                label.setBounds(panelObjetos.getX() + 5, initialY , 300, 25); 
+                label.setBounds(panelObjetos.getX() + 5, initialY, 300, 25);
                 label.addMouseListener(pp);
-                
+
                 panelObjetos.add((Component) label);
-                             
+
                 DragSource ds = new DragSource();
-		ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl(labelPreview));               
+                ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl(labelPreview));
                 initialY = initialY + 26;
-            }           
+            }
 
         } else {
             return;
@@ -675,26 +686,26 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImportSrpitesActionPerformed
 
     private void btnNewFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewFileActionPerformed
-        new Scene(editionPanel,scrEditionPane);
+        new Scene(editionPanel, scrEditionPane);
     }//GEN-LAST:event_btnNewFileActionPerformed
 
     private void btnZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomInActionPerformed
-        zoom = new Zoom(editionPanel,scrEditionPane);
+        zoom = new Zoom(editionPanel, scrEditionPane);
         zoom.zoomIn();
     }//GEN-LAST:event_btnZoomInActionPerformed
 
     private void btnZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomOutActionPerformed
-        zoom = new Zoom(editionPanel,scrEditionPane);
+        zoom = new Zoom(editionPanel, scrEditionPane);
         zoom.zoomOut();
     }//GEN-LAST:event_btnZoomOutActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         JFileChooser fs = new JFileChooser();
         fs.setDialogTitle("Salve o json de estado");
-        fs.setFileFilter(new FileNameExtensionFilter("json files (*.json)","json"));
-        
+        fs.setFileFilter(new FileNameExtensionFilter("json files (*.json)", "json"));
+
         int result = fs.showSaveDialog(null);
-        if(result == JFileChooser.APPROVE_OPTION){
+        if (result == JFileChooser.APPROVE_OPTION) {
             try {
                 FileWriter fw = new FileWriter(fs.getSelectedFile().getPath());
                 JsonParser jp = new JsonParser(fw);
@@ -703,8 +714,7 @@ public class Interface1 extends javax.swing.JFrame {
                 Logger.getLogger(Interface1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
+
         CodeBuilder cb = new CodeBuilder();
         List<Component> components = Arrays.asList(editionPanel.getComponents());
 
@@ -723,8 +733,50 @@ public class Interface1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTranslateActionPerformed
 
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
-        new Scene(editionPanel,scrEditionPane);
+        new Scene(editionPanel, scrEditionPane);
     }//GEN-LAST:event_btnSettingsActionPerformed
+
+    private void btnClearSceneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSceneActionPerformed
+
+        editionPanel.removeAll();
+        instancePanel.removeAll();
+        this.hes.removeAllListaInstancias();
+        instancePanel.repaint();
+        instancePanel.revalidate();
+        editionPanel.repaint();
+        editionPanel.revalidate();
+
+    }//GEN-LAST:event_btnClearSceneActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        Object source = actionsPanel.getComponent(1);
+
+        if (source instanceof JButton) {
+            btnDelete = (JButton) source;
+
+            List<Component> comps = Arrays.asList(editionPanel.getComponents());
+
+            for (Component comp : comps) {
+                JLabel label = new JLabel();
+                if (comp instanceof JLabel) {
+                    label = (JLabel) comp;
+                    if (label.getBorder() != null) {
+                        editionPanel.remove(comp);
+                        instancePanel.remove(comp);
+                        hes.removeLabelListaInstancias(label);
+                        JOptionPane.showMessageDialog(actionsPanel, "removido");
+
+                    }
+                }
+            }
+            editionPanel.repaint();
+            editionPanel.revalidate();
+            instancePanel.repaint();
+            instancePanel.revalidate();
+
+        }
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments

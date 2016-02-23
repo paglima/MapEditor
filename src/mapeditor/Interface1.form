@@ -417,7 +417,7 @@
                       <Image iconType="3" name="/imagens/move-icon.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Movimenta imagem/sprite"/>
-                    <Property name="name" type="java.lang.String" value="Translate" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="btnTranslate" noResource="true"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTranslateActionPerformed"/>
@@ -429,7 +429,7 @@
                       <Image iconType="3" name="/imagens/Actions-transform-rotate-icon.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Rotaciona imagem/sprite"/>
-                    <Property name="name" type="java.lang.String" value="Rotate" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="btnRotate" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labeltranslate">
@@ -440,6 +440,7 @@
                 <Component class="javax.swing.JLabel" name="labelRotate">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Rotate"/>
+                    <Property name="name" type="java.lang.String" value="" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnDelete">
@@ -448,7 +449,11 @@
                       <Image iconType="3" name="/imagens/image-remove-icon.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Deleta imagem/sprite"/>
+                    <Property name="name" type="java.lang.String" value="btnDelete" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelDelete">
                   <Properties>
@@ -577,6 +582,9 @@
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Limpar Cen&#xe1;rio"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearSceneActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

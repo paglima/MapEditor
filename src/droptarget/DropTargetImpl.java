@@ -16,18 +16,16 @@ import javax.swing.JPanel;
 public class DropTargetImpl extends DropTargetAdapter implements DropTargetListener {
 
     private DropTarget dropTarget;
-    private JPanel panel;
+    private JPanel editionPanel;
     private JPanel instancePanel;
-    private JPanel actionsPanel;
     private List<JLabel> listaDeInstancias = new ArrayList<>();
     int numInstancias=0;
     int initialY=0;
 
-    public DropTargetImpl(JPanel jpanel, JPanel instancePanel, JPanel actionsPanel){
-        this.panel = jpanel;
+    public DropTargetImpl(JPanel editionPanel, JPanel instancePanel){
+        this.editionPanel = editionPanel;
         this.instancePanel=instancePanel;
-        this.actionsPanel=actionsPanel;
-        dropTarget = new DropTarget(panel, DnDConstants.ACTION_COPY, this, true, null);
+        dropTarget = new DropTarget(editionPanel, DnDConstants.ACTION_COPY, this, true, null);
         
        }
     
@@ -45,9 +43,9 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             
             listaDeInstancias.add(label);
             
-            label.addMouseListener(new DragAndDropWithinPanel(listaDeInstancias,actionsPanel));
-            label.addMouseMotionListener(new DragAndDropWithinPanel(listaDeInstancias,actionsPanel));
-            
+            label.addMouseListener(new DragAndDropWithinPanel(listaDeInstancias));
+            label.addMouseMotionListener(new DragAndDropWithinPanel(listaDeInstancias));
+                      
             numInstancias++;
             
             JLabel instancia = new JLabel();
@@ -63,11 +61,11 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
                 event.acceptDrop(DnDConstants.ACTION_COPY);
                 
                 label.setBounds(event.getLocation().x, event.getLocation().y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());          
-                this.panel.add(label);
+                this.editionPanel.add(label);
 //                instances.add(label);
-                this.panel.repaint();
+                this.editionPanel.repaint();
                 event.dropComplete(true);
-                this.panel.validate();
+                this.editionPanel.validate();
                 return;
             }
             event.rejectDrop();
