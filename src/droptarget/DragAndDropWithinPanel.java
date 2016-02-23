@@ -113,24 +113,17 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
     }
 
     public boolean getJToggleTranslateSelected() {
-        List<Component> comps = Arrays.asList(actionsPanel.getComponents());
-        for (Component comp : comps) {
-            JToggleButton tbtn = (JToggleButton) comp;
-            if (tbtn.getName().equals("Translate") && tbtn.isSelected()) {
-                return true;
-            }
-        }
+        JToggleButton tbtn = (JToggleButton)actionsPanel.getComponent(0); // Component JToggleButton(Translate)
+        if(tbtn.isSelected())
+            return true;
         return false;
+        
     }
 
     public boolean getJToggleRotateSelected() {
-        List<Component> comps = Arrays.asList(actionsPanel.getComponents());
-        for (Component comp : comps) {
-            JToggleButton tbtn = (JToggleButton) comp;
-            if (tbtn.getName().equals("Rotate") && tbtn.isSelected()) {
-                return true;
-            }
-        }
+       JToggleButton tbtn = (JToggleButton)actionsPanel.getComponent(1);//Component JToggleButton(Rotate)
+        if(tbtn.isSelected())
+            return true;
         return false;
     }
 
