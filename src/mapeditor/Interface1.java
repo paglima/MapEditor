@@ -142,10 +142,15 @@ public class Interface1 extends javax.swing.JFrame {
 
         scrMainPanel.setPreferredSize(new java.awt.Dimension(1440, 900));
 
+        mainPanel.setBackground(new java.awt.Color(153, 153, 153));
         mainPanel.setPreferredSize(new java.awt.Dimension(1440, 900));
 
+        scrObjectsPanel.setBackground(new java.awt.Color(204, 204, 204));
+
+        objectsPanel.setBackground(new java.awt.Color(204, 204, 204));
         objectsPanel.setToolTipText("");
 
+        panelObjetos.setBackground(new java.awt.Color(204, 204, 204));
         panelObjetos.setToolTipText("Painel de Objetos");
 
         javax.swing.GroupLayout panelObjetosLayout = new javax.swing.GroupLayout(panelObjetos);
@@ -161,6 +166,7 @@ public class Interface1 extends javax.swing.JFrame {
 
         objectsPanel.addTab("Objects", panelObjetos);
 
+        instancePanel.setBackground(new java.awt.Color(204, 204, 204));
         instancePanel.setToolTipText("Painel de Instâncias");
 
         javax.swing.GroupLayout instancePanelLayout = new javax.swing.GroupLayout(instancePanel);
@@ -176,6 +182,7 @@ public class Interface1 extends javax.swing.JFrame {
 
         objectsPanel.addTab("Instances", instancePanel);
 
+        panelTiles.setBackground(new java.awt.Color(204, 204, 204));
         panelTiles.setToolTipText("Painel Tiles");
 
         btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Open-folder-add-icon.png"))); // NOI18N
@@ -467,15 +474,14 @@ public class Interface1 extends javax.swing.JFrame {
                     .addComponent(resourcesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(scrObjectsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(scrObjectsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(scrPreviewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(actionsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(scrEditionPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                    .addComponent(actionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scrEditionPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         scrMainPanel.setViewportView(mainPanel);
