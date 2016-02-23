@@ -42,7 +42,7 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
         this.listaDeInstancias = listaDeInstancias;
         this.actionsPanel = actionsPanel;
     }
-    
+
     @Override
     public void mouseDragged(MouseEvent e) {
 ////        distancia entre o click do mouse sobre o objeto e o dragging
@@ -52,9 +52,9 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
 //        int newX = e.getComponent().getX() + dX - e.getComponent().getWidth()/4;
 //        int newY = e.getComponent().getY() + dY - e.getComponent().getHeight()/2;
 //        e.getComponent().setLocation(newX , newY);
-        
+
         this.addBorderOnObject(e);
-        
+
         if (this.getJToggleTranslateSelected()) {
             int anchorX = anchorPoint.x;
             int anchorY = anchorPoint.y;
@@ -83,7 +83,7 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
 
     @Override
     public void mouseClicked(MouseEvent e) {
-       this.addBorderOnObject(e);    
+        this.addBorderOnObject(e);
     }
 
     @Override
@@ -104,28 +104,29 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
     public void mouseExited(MouseEvent e) {
 
     }
-    
+
     public void addBorderOnObject(MouseEvent e) {
-        for (JLabel label : listaDeInstancias)         
-                label.setBorder(null);             
+        for (JLabel label : listaDeInstancias) {
+            label.setBorder(null);
+        }
         JLabel label = (JLabel) e.getComponent();
         label.setBorder(BorderFactory.createLineBorder(Color.black, 1));
     }
 
     public boolean getJToggleTranslateSelected() {
-        JToggleButton tbtn = (JToggleButton)actionsPanel.getComponent(0); // Component JToggleButton(Translate)
-        if(tbtn.isSelected())
+        JToggleButton tbtn = (JToggleButton) actionsPanel.getComponent(0); // Component JToggleButton(Translate)
+        if (tbtn.isSelected()) {
             return true;
+        }
         return false;
-        
     }
 
     public boolean getJToggleRotateSelected() {
-       JToggleButton tbtn = (JToggleButton)actionsPanel.getComponent(1);//Component JToggleButton(Rotate)
-        if(tbtn.isSelected())
+        JToggleButton tbtn = (JToggleButton) actionsPanel.getComponent(1);//Component JToggleButton(Rotate)
+        if (tbtn.isSelected()) {
             return true;
+        }
         return false;
     }
-
 
 }
