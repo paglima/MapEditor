@@ -42,6 +42,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
 
             label.setText(null);
             label.setIcon(new ImageIcon(path.getDescription()));
+            label.setBorder(null);
             
             listaDeInstancias.add(label);
             

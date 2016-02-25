@@ -42,7 +42,6 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
     public DragAndDropWithinPanel(List<JLabel> listaDeInstancias,HandleEditionScene hes) {
         this.listaDeInstancias = listaDeInstancias;
         this.hes=hes;
-        hes.setListaDeInstancias(listaDeInstancias);
     }
 
     @Override

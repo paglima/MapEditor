@@ -762,9 +762,9 @@ public class Interface1 extends javax.swing.JFrame {
                 if (comp instanceof JLabel) {
                     label = (JLabel) comp;
                     if (label.getBorder() != null) {
-                        editionPanel.remove(comp);
-                        instancePanel.remove(comp);
-                        hes.removeLabelListaInstancias(label);
+                        editionPanel.remove((JLabel)comp);
+                        instancePanel.remove((JLabel)comp);
+//                        hes.removeLabelListaInstancias(label);
                         JOptionPane.showMessageDialog(actionsPanel, "removido");
 
                     }
