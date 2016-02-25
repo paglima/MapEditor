@@ -3,4 +3,5 @@ build/
 .gitignore
 /dist/
 nbproject/private
+nbproject/project.properties
 
