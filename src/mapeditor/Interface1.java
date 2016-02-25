@@ -81,8 +81,9 @@ public class Interface1 extends javax.swing.JFrame {
         initComponents();
 
         pp = new PreviewSprites(labelPreview);
-        DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel, instancePanel);
         hes = new HandleEditionScene(actionsPanel, editionPanel, instancePanel, resourcesPanel);
+        DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel, instancePanel,hes);
+        
         editionPanel.setBackground(Color.white);
 //        panel2.addMouseListener(new ComponentDragger());
 //        panel2.addMouseMotionListener(new ComponentDragger());

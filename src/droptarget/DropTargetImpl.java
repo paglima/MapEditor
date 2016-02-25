@@ -18,13 +18,15 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
     private DropTarget dropTarget;
     private JPanel editionPanel;
     private JPanel instancePanel;
+    HandleEditionScene hes;
     private List<JLabel> listaDeInstancias = new ArrayList<>();
     int numInstancias=0;
     int initialY=0;
 
-    public DropTargetImpl(JPanel editionPanel, JPanel instancePanel){
+    public DropTargetImpl(JPanel editionPanel, JPanel instancePanel,HandleEditionScene hes){
         this.editionPanel = editionPanel;
         this.instancePanel=instancePanel;
+        this.hes=hes;
         dropTarget = new DropTarget(editionPanel, DnDConstants.ACTION_COPY, this, true, null);
         
        }
@@ -43,8 +45,8 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             
             listaDeInstancias.add(label);
             
-            label.addMouseListener(new DragAndDropWithinPanel(listaDeInstancias));
-            label.addMouseMotionListener(new DragAndDropWithinPanel(listaDeInstancias));
+            label.addMouseListener(new DragAndDropWithinPanel(listaDeInstancias,hes));
+            label.addMouseMotionListener(new DragAndDropWithinPanel(listaDeInstancias,hes));
                       
             numInstancias++;
             

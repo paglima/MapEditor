@@ -34,13 +34,14 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
     protected Point anchorPoint;
     private List<JLabel> listaDeInstancias = new ArrayList<>();
     
-    private HandleEditionScene hes = new HandleEditionScene();
+    private HandleEditionScene hes;
 
     public DragAndDropWithinPanel() {
     }
 
-    public DragAndDropWithinPanel(List<JLabel> listaDeInstancias) {
+    public DragAndDropWithinPanel(List<JLabel> listaDeInstancias,HandleEditionScene hes) {
         this.listaDeInstancias = listaDeInstancias;
+        this.hes=hes;
         hes.setListaDeInstancias(listaDeInstancias);
     }
 
