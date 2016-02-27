@@ -1,5 +1,6 @@
 package droptarget;
 
+import mapeditor.HandleEditionScene;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -12,13 +13,15 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import mapeditor.HandleInstances;
 
 public class DropTargetImpl extends DropTargetAdapter implements DropTargetListener {
 
     private DropTarget dropTarget;
     private JPanel editionPanel;
     private JPanel instancePanel;
-    HandleEditionScene hes;
+    private HandleEditionScene hes;
+    private HandleInstances handleInstances;
     private List<JLabel> listaDeInstancias = new ArrayList<>();
     int numInstancias=0;
     int initialY=0;
@@ -26,6 +29,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
     public DropTargetImpl(JPanel editionPanel, JPanel instancePanel,HandleEditionScene hes){
         this.editionPanel = editionPanel;
         this.instancePanel=instancePanel;
+        handleInstances= new HandleInstances(instancePanel);
         this.hes=hes;
         dropTarget = new DropTarget(editionPanel, DnDConstants.ACTION_COPY, this, true, null);
         
@@ -44,21 +48,24 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             label.setIcon(new ImageIcon(path.getDescription()));
             label.setBorder(null);
             
-            listaDeInstancias.add(label);
+//            listaDeInstancias.add(label);
+            handleInstances.addInstance(label);
             
-            label.addMouseListener(new DragAndDropWithinPanel(listaDeInstancias,hes));
-            label.addMouseMotionListener(new DragAndDropWithinPanel(listaDeInstancias,hes));
+            label.addMouseListener(new DragAndDropWithinPanel(hes,handleInstances));
+            label.addMouseMotionListener(new DragAndDropWithinPanel(hes,handleInstances));
                       
-            numInstancias++;
+//            numInstancias++;
             
-            JLabel instancia = new JLabel();
-            instancia.setText(label.getName()+numInstancias);
-            instancia.setBounds(instancePanel.getX()+5, initialY, 300, 25);
-            instancePanel.add(instancia);         
-            initialY+=20;
-            
-            instancePanel.repaint();
-            instancePanel.validate();
+
+//            JLabel instancia = new JLabel();
+////            instancia.setText(label.getName()+numInstancias);
+//            instancia.setText(label.getName()+handleInstances.getInstances().get(handleInstances.getInstances().indexOf(instancia)));// indice do objeto
+//            instancia.setBounds(instancePanel.getX()+5, initialY, 300, 25);
+//            instancePanel.add(instancia);         
+//            initialY+=20;
+//            
+//            instancePanel.repaint();
+//            instancePanel.validate();
             
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);

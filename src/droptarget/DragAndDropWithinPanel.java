@@ -5,6 +5,7 @@
  */
 package droptarget;
 
+import mapeditor.HandleEditionScene;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -24,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import mapeditor.HandleInstances;
 
 /**
  *
@@ -35,14 +37,20 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
     private List<JLabel> listaDeInstancias = new ArrayList<>();
     
     private HandleEditionScene hes;
+    private HandleInstances handleInstances;
 
-    public DragAndDropWithinPanel() {
-    }
-
-    public DragAndDropWithinPanel(List<JLabel> listaDeInstancias,HandleEditionScene hes) {
-        this.listaDeInstancias = listaDeInstancias;
+    public DragAndDropWithinPanel(HandleEditionScene hes,HandleInstances handleInstances) {
+        this.handleInstances=handleInstances;
         this.hes=hes;
     }
+    public DragAndDropWithinPanel(){
+        
+    }
+
+//    public DragAndDropWithinPanel(List<JLabel> listaDeInstancias,HandleEditionScene hes) {
+//        this.listaDeInstancias = listaDeInstancias;
+//        this.hes=hes;
+//    }
 
     @Override
     public void mouseDragged(MouseEvent e) {

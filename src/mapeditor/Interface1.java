@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
 import droptarget.DragGestureImpl;
 import droptarget.DropTargetImpl;
-import droptarget.HandleEditionScene;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.dnd.DnDConstants;

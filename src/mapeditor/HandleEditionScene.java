@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package droptarget;
+package mapeditor;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -30,8 +30,8 @@ public class HandleEditionScene {
     private JPanel instancePanel;
     private JPanel resourcesPanel;
     
-    private List<JLabel> listaDeInstancias = new ArrayList<>();
-
+//    private List<JLabel> listaDeInstancias = new ArrayList<>();
+    private HandleInstances handleInstances = new HandleInstances(instancePanel);
     
     public HandleEditionScene(){
         
@@ -44,23 +44,47 @@ public class HandleEditionScene {
     }
 
    public void addBorderOnObject(MouseEvent e) {
-        for (JLabel label : listaDeInstancias) {
+        for (JLabel label : handleInstances.getInstances()) {
             label.setBorder(null);
         }
         JLabel label = (JLabel) e.getComponent();
         label.setBorder(BorderFactory.createLineBorder(Color.blue, 2));
     }
-
+   public JToggleButton getJToggleButtonTranslate(){
+       JToggleButton btnTranslate = null;
+        for(Component c : Arrays.asList(actionsPanel.getComponents())){
+            if(c instanceof JToggleButton){
+                btnTranslate=(JToggleButton)c;
+                if(btnTranslate.getName().equals("btnTranslate"))
+                    return btnTranslate;
+            }
+        }
+        return null;
+   }
+   
     public boolean getJToggleTranslateSelected() {
-        JToggleButton tbtn = (JToggleButton) actionsPanel.getComponent(0); // Component JToggleButton(Translate)
+        
+//        JToggleButton tbtn = (JToggleButton) actionsPanel.getComponent(0); 
+        JToggleButton tbtn = this.getJToggleButtonTranslate();    // Component JToggleButton(Translate)
         if (tbtn.isSelected()) {
             return true;
         }
         return false;
     }
-
+    
+    public JToggleButton getJToggleButtonRotate(){
+       JToggleButton btnRotate = null;
+        for(Component c : Arrays.asList(actionsPanel.getComponents())){
+            if(c instanceof JToggleButton){
+                btnRotate=(JToggleButton)c;
+                if(btnRotate.getName().equals("btnRotate"))
+                    return btnRotate;
+            }
+        }
+        return null;
+   }
     public boolean getJToggleRotateSelected() {
-        JToggleButton tbtn = (JToggleButton) actionsPanel.getComponent(1);//Component JToggleButton(Rotate)
+        JToggleButton tbtn = this.getJToggleButtonRotate();//Component JToggleButton(Rotate)
         if (tbtn.isSelected()) {
             return true;
         }
@@ -68,23 +92,12 @@ public class HandleEditionScene {
     }
     
     public void removeAllListaInstancias(){
-        this.listaDeInstancias.clear();
+        this.handleInstances.getInstances().clear();
     }
     public void removeLabelListaInstancias(JLabel l){
-        for(JLabel label : listaDeInstancias){
+        for(JLabel label : handleInstances.getInstances()){
             if(label ==l)
-                listaDeInstancias.remove(l);
+                handleInstances.getInstances().remove(l);
         }
     }
-
-    public List<JLabel> getListaDeInstancias() {
-        return listaDeInstancias;
-    }
-
-    public void setListaDeInstancias(List<JLabel> listaDeInstancias) {
-        this.listaDeInstancias = listaDeInstancias;
-    }
-
-    
-    
 }
