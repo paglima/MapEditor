@@ -42,11 +42,11 @@ public class Scene {
     public void openSettings() {
         sf = new SceneFrame();
         sf.setVisible(true);
+        this.preDefinedValues();
         sf.setDefaultCloseOperation(sf.DISPOSE_ON_CLOSE);
-        sf.getWidthWindowField().setText(Integer.toString(scrEditionPane.getSize().width));
-        sf.getHeightWindowField().setText(Integer.toString(scrEditionPane.getSize().height));
-        sf.getWidthSceneField().setText(Integer.toString(editionPanel.getSize().width));
-        sf.getHeightSceneField().setText(Integer.toString(scrEditionPane.getSize().height));
+        
+        
+        
         this.finishSettings();
 
     }
@@ -56,6 +56,12 @@ public class Scene {
         sf.getBtnCancel().addActionListener(btnCancel);
         sf.getBtnColor().addActionListener(btnColor);
 
+    }
+    private void preDefinedValues(){
+        sf.getWidthWindowField().setText(Integer.toString(scrEditionPane.getSize().width));
+        sf.getHeightWindowField().setText(Integer.toString(scrEditionPane.getSize().height));
+        sf.getWidthSceneField().setText(Integer.toString(editionPanel.getSize().width));
+        sf.getHeightSceneField().setText(Integer.toString(scrEditionPane.getSize().height));
     }
 
     ActionListener btnOk = new ActionListener() {
