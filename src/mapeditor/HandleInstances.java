@@ -8,6 +8,7 @@ package mapeditor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -18,6 +19,8 @@ public class HandleInstances {
 
     List<JLabel> instances = new ArrayList<>();
     JPanel instancePanel;
+    int numInstances = 0;
+    int countInstances = 0;
     int posX = 5;
     int posY = 20;
     int width = 300;
@@ -27,24 +30,41 @@ public class HandleInstances {
         this.instancePanel = instancePanel;
     }
 
-    public void addInstance (JLabel label) {
+    public void addInstance(JLabel label) {
+        instancePanel.removeAll();
+
         JLabel instance = new JLabel();
-//        instance.setBounds(instancePanel.getX() + 5, initialY, 300, 25);
-        instance.setText(label.getName());
+
+        instance.setText(FileNameUtils.removeExtension(label.getName()) + "(" + numInstances + ")");
+        instance.setBounds(instancePanel.getX() + posX, (instances.size() * posY), width, height);
         this.instances.add(instance);
-        this.addInstanceInPanel();
+        numInstances++;
+
+        for (JLabel l : instances) {
+            l.setLocation(instancePanel.getX() + posX, (countInstances * posY));
+            this.instancePanel.add(l);
+            countInstances++;
+        }
+
+        countInstances = 0;
 
         instancePanel.repaint();
         instancePanel.validate();
     }
 
-    private void addInstanceInPanel() {
-//        instancePanel.removeAll();
-        for (JLabel instance : instances) {
-            instance.setText(instance.getText() +"(" + this.instances.get(this.instances.indexOf(instance))+")" );
-            instance.setBounds(instancePanel.getX() + posX, instancePanel.getY() + (instances.indexOf(instance) + posY), width, height);
-            this.instancePanel.add(instance);
+    public void removeInstance(int i) {
+        instances.remove(i);
+        JOptionPane.showMessageDialog(null, instances.size());
+
+        for (JLabel l : instances) {
+            l.setLocation(instancePanel.getX() + posX, (countInstances * posY));
+            this.instancePanel.add(l);
+            countInstances++;
         }
+        countInstances = 0;
+
+        instancePanel.repaint();
+        instancePanel.validate();
     }
 
     public void setInstances(List<JLabel> instances) {

@@ -34,7 +34,7 @@ import mapeditor.HandleInstances;
 public class DragAndDropWithinPanel extends MouseAdapter implements MouseListener {
 
     protected Point anchorPoint;
-    private List<JLabel> listaDeInstancias = new ArrayList<>();
+//    private List<JLabel> listaDeInstancias = new ArrayList<>();
     
     private HandleEditionScene hes;
     private HandleInstances handleInstances;
@@ -127,12 +127,8 @@ public class DragAndDropWithinPanel extends MouseAdapter implements MouseListene
  
     }
     
-    public List<JLabel> getListaDeInstancias() {
-        return listaDeInstancias;
-    }
-
-    public void setListaDeInstancias(List<JLabel> listaDeInstancias) {
-        this.listaDeInstancias = listaDeInstancias;
-    }
+//    public List<JLabel> getListaDeInstancias() {
+//        return listaDeInstancias;
+//    }
 
 }

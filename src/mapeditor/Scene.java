@@ -43,6 +43,10 @@ public class Scene {
         sf = new SceneFrame();
         sf.setVisible(true);
         sf.setDefaultCloseOperation(sf.DISPOSE_ON_CLOSE);
+        sf.getWidthWindowField().setText(Integer.toString(scrEditionPane.getSize().width));
+        sf.getHeightWindowField().setText(Integer.toString(scrEditionPane.getSize().height));
+        sf.getWidthSceneField().setText(Integer.toString(editionPanel.getSize().width));
+        sf.getHeightSceneField().setText(Integer.toString(scrEditionPane.getSize().height));
         this.finishSettings();
 
     }

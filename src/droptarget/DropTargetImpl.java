@@ -26,10 +26,10 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
     int numInstancias=0;
     int initialY=0;
 
-    public DropTargetImpl(JPanel editionPanel, JPanel instancePanel,HandleEditionScene hes){
+    public DropTargetImpl(JPanel editionPanel, JPanel instancePanel,HandleEditionScene hes, HandleInstances hi){
         this.editionPanel = editionPanel;
         this.instancePanel=instancePanel;
-        handleInstances= new HandleInstances(instancePanel);
+        this.handleInstances= hi;
         this.hes=hes;
         dropTarget = new DropTarget(editionPanel, DnDConstants.ACTION_COPY, this, true, null);
         
@@ -43,7 +43,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             
             JLabel label = (JLabel) tr.getTransferData(dataFlavor);
             ImageIcon path = (ImageIcon)label.getIcon();
-
+            
             label.setText(null);
             label.setIcon(new ImageIcon(path.getDescription()));
             label.setBorder(null);

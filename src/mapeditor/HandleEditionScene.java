@@ -44,8 +44,12 @@ public class HandleEditionScene {
     }
 
    public void addBorderOnObject(MouseEvent e) {
-        for (JLabel label : handleInstances.getInstances()) {
-            label.setBorder(null);
+        for (Component comp : editionPanel.getComponents()) {
+            if(comp instanceof JLabel){
+                JLabel label =(JLabel)comp;
+                label.setBorder(null);
+            }
+ 
         }
         JLabel label = (JLabel) e.getComponent();
         label.setBorder(BorderFactory.createLineBorder(Color.blue, 2));
@@ -90,6 +94,24 @@ public class HandleEditionScene {
         }
         return false;
     }
+//    public JButton getJButtonDelete(){
+//       JButton btnDelete = null;
+//        for(Component c : Arrays.asList(actionsPanel.getComponents())){
+//            if(c instanceof JButton){
+//                btnDelete=(JButton)c;
+//                if(btnDelete.getName().equals("btnRotate"))
+//                    return btnDelete;
+//            }
+//        }
+//        return null;
+//   }
+//    public boolean getDeleteSelected() {
+//        JButton tbtn = this.getJButtonDelete();//Component JToggleButton(Rotate)
+//        if (tbtn.isSelected()) {
+//            return true;
+//        }
+//        return false;
+//    }
     
     public void removeAllListaInstancias(){
         this.handleInstances.getInstances().clear();
