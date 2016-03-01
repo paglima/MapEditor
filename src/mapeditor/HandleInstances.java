@@ -5,6 +5,7 @@
  */
 package mapeditor;
 
+import Utils.FileNameUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;

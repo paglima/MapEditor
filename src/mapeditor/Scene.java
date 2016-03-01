@@ -61,7 +61,7 @@ public class Scene {
         sf.getWidthWindowField().setText(Integer.toString(scrEditionPane.getSize().width));
         sf.getHeightWindowField().setText(Integer.toString(scrEditionPane.getSize().height));
         sf.getWidthSceneField().setText(Integer.toString(editionPanel.getSize().width));
-        sf.getHeightSceneField().setText(Integer.toString(scrEditionPane.getSize().height));
+        sf.getHeightSceneField().setText(Integer.toString(editionPanel.getSize().height));
     }
 
     ActionListener btnOk = new ActionListener() {

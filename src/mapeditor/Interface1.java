@@ -1,5 +1,6 @@
 package mapeditor;
 
+import Utils.FileNameUtils;
 import droptarget.DragAndDropWithinPanel;
 import semUso.LoadFiles;
 import codebuilder.CodeBuilder;
@@ -30,6 +31,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import json.JsonLabel;
@@ -56,21 +59,59 @@ public class Interface1 extends javax.swing.JFrame {
     DragAndDropWithinPanel dadwp = new DragAndDropWithinPanel();
     HandleEditionScene hes;
     HandleInstances hi;
-
+    
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    
     int larguraPainel = 200;
     int colunas = 1;
     int linhas = 0;
     int initialY = 0;
+    int defaultScreenX = 1440;
+    int defaultScreenY = 900;
+    
+
+    public void customDimension() {
+        JOptionPane.showMessageDialog(null, screenSize.width);
+        JOptionPane.showMessageDialog(null, screenSize.height);
+        JOptionPane.showMessageDialog(null, scrMainPanel.getSize().width);
+        JOptionPane.showMessageDialog(null, scrMainPanel.getSize().height);
+
+        this.calculatesDimensionJScrollPane(scrMainPanel);
+        this.calculatesDimensionJScrollPane(scrObjectsPanel);
+        this.calculatesDimensionJScrollPane(scrPreviewPanel);
+        this.calculatesDimensionJScrollPane(scrEditionPane);
+        this.calculatesDimensionJPanel(mainPanel);
+        this.calculatesDimensionJPanel(menuPanel);
+        this.calculatesDimensionJPanel(editionPanel);
+        this.calculatesDimensionJPanel(resourcesPanel);
+        this.calculatesDimensionJPanel(scenePanel);
+        this.calculatesDimensionJPanel(actionsPanel);
+        this.calculatesDimensionJPanel(panelObjetos);
+        this.calculatesDimensionJPanel(panelPreview);
+        this.calculatesDimensionJPanel(instancePanel);
+        this.calculatesDimensionJPanel(panelTiles);
+
+    }
+
+    private void calculatesDimensionJPanel(JPanel panel) {
+        panel.setSize(screenSize.width / (this.defaultScreenX / panel.getSize().width),
+                screenSize.height / (this.defaultScreenY / panel.getSize().height));
+        panel.setPreferredSize(new Dimension(screenSize.width / (this.defaultScreenX / panel.getSize().width),
+                screenSize.height / (this.defaultScreenY / panel.getSize().height)));
+    }
+
+    private void calculatesDimensionJScrollPane(JScrollPane panel) {
+        panel.setSize(screenSize.width / (this.defaultScreenX / (panel.getSize().width)),
+                screenSize.height / (this.defaultScreenY / (panel.getSize().height)));
+        panel.setPreferredSize(new Dimension(screenSize.width / (this.defaultScreenX / (panel.getSize().width)),
+                screenSize.height / (this.defaultScreenY / (panel.getSize().height))));
+    }
 
     public Interface1() {
         initComponents();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize);
         this.setPreferredSize(screenSize);
-        this.scrMainPanel.setSize(screenSize);
-        this.scrMainPanel.setPreferredSize(screenSize);
-        this.mainPanel.setSize(screenSize);
-        this.mainPanel.setPreferredSize(screenSize);
+        this.customDimension();
 
         pp = new PreviewSprites(labelPreview);
         hes = new HandleEditionScene(actionsPanel, editionPanel, instancePanel, resourcesPanel);
@@ -80,6 +121,7 @@ public class Interface1 extends javax.swing.JFrame {
         editionPanel.setBackground(Color.white);
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -107,7 +149,7 @@ public class Interface1 extends javax.swing.JFrame {
         labelRotate = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         labelDelete = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        scenePanel = new javax.swing.JPanel();
         btnSettings = new javax.swing.JButton();
         btnClearScene = new javax.swing.JButton();
         btnZoomOut = new javax.swing.JButton();
@@ -129,10 +171,10 @@ public class Interface1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        scrMainPanel.setPreferredSize(new java.awt.Dimension(1440, 900));
+        scrMainPanel.setPreferredSize(new java.awt.Dimension(1439, 899));
 
         mainPanel.setBackground(new java.awt.Color(153, 153, 153));
-        mainPanel.setPreferredSize(new java.awt.Dimension(1440, 900));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1439, 899));
 
         scrObjectsPanel.setBackground(new java.awt.Color(204, 204, 204));
         scrObjectsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Panel Objects"));
@@ -202,6 +244,8 @@ public class Interface1 extends javax.swing.JFrame {
 
         scrObjectsPanel.setViewportView(objectsPanel);
 
+        scrPreviewPanel.setPreferredSize(new java.awt.Dimension(340, 240));
+
         panelPreview.setBackground(new java.awt.Color(204, 204, 204));
         panelPreview.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Preview"));
 
@@ -209,41 +253,41 @@ public class Interface1 extends javax.swing.JFrame {
         panelPreview.setLayout(panelPreviewLayout);
         panelPreviewLayout.setHorizontalGroup(
             panelPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPreviewLayout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addComponent(labelPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+            .addGroup(panelPreviewLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(labelPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         panelPreviewLayout.setVerticalGroup(
             panelPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPreviewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPreviewLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(labelPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
 
         scrPreviewPanel.setViewportView(panelPreview);
 
-        scrEditionPane.setMaximumSize(new java.awt.Dimension(1000, 32767));
-        scrEditionPane.setPreferredSize(new java.awt.Dimension(1000, 600));
+        scrEditionPane.setPreferredSize(new java.awt.Dimension(1024, 768));
 
-        editionPanel.setPreferredSize(new java.awt.Dimension(1024, 768));
+        editionPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
         javax.swing.GroupLayout editionPanelLayout = new javax.swing.GroupLayout(editionPanel);
         editionPanel.setLayout(editionPanelLayout);
         editionPanelLayout.setHorizontalGroup(
             editionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGap(0, 881, Short.MAX_VALUE)
         );
         editionPanelLayout.setVerticalGroup(
             editionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 768, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         scrEditionPane.setViewportView(editionPanel);
 
         resourcesPanel.setBackground(new java.awt.Color(204, 204, 204));
         resourcesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Menu-Resources"));
+        resourcesPanel.setPreferredSize(new java.awt.Dimension(800, 150));
 
         btnImportSprites.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Actions-list-add-icon.png"))); // NOI18N
         btnImportSprites.setToolTipText("Importa imagens/sprites");
@@ -328,11 +372,11 @@ public class Interface1 extends javax.swing.JFrame {
                     .addComponent(btnTranslate, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                     .addComponent(btnRotate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Scene"));
+        scenePanel.setBackground(new java.awt.Color(204, 204, 204));
+        scenePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Scene"));
 
         btnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/window-system-icon.png"))); // NOI18N
         btnSettings.setToolTipText("Ajustar tela e cena");
@@ -375,37 +419,37 @@ public class Interface1 extends javax.swing.JFrame {
 
         lZoom.setText("Zoom In    -     Zoom Out");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout scenePanelLayout = new javax.swing.GroupLayout(scenePanel);
+        scenePanel.setLayout(scenePanelLayout);
+        scenePanelLayout.setHorizontalGroup(
+            scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(scenePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lConfig))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnClearScene, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lClean))
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(scenePanelLayout.createSequentialGroup()
                         .addComponent(btnZoomOut, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
                         .addComponent(btnZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lZoom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(46, 46, 46))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        scenePanelLayout.setVerticalGroup(
+            scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, scenePanelLayout.createSequentialGroup()
+                .addGroup(scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lConfig)
                     .addComponent(lClean)
                     .addComponent(lZoom))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnClearScene, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnZoomOut, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,32 +466,31 @@ public class Interface1 extends javax.swing.JFrame {
         resourcesPanelLayout.setHorizontalGroup(
             resourcesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(resourcesPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(resourcesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnImportSprites, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(actionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
+                .addComponent(scenePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
                 .addGroup(resourcesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCompile, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lCompile))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(140, 140, 140))
         );
         resourcesPanelLayout.setVerticalGroup(
             resourcesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, resourcesPanelLayout.createSequentialGroup()
                 .addGroup(resourcesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(resourcesPanelLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lCompile)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnCompile)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCompile))
                     .addComponent(actionsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(scenePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, resourcesPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -533,7 +576,7 @@ public class Interface1 extends javax.swing.JFrame {
                     .addComponent(btnSave)
                     .addComponent(btnLoad)
                     .addComponent(btnNewFile))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -542,18 +585,17 @@ public class Interface1 extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(scrPreviewPanel))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(scrObjectsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrObjectsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(scrPreviewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scrEditionPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(resourcesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(160, 160, 160))
+                    .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(resourcesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 900, Short.MAX_VALUE))
+                .addGap(372, 372, 372))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,14 +606,14 @@ public class Interface1 extends javax.swing.JFrame {
                     .addComponent(resourcesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(scrObjectsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(scrPreviewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap(124, Short.MAX_VALUE))
+                        .addComponent(scrPreviewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(123, 123, 123))
         );
 
         scrMainPanel.setViewportView(mainPanel);
@@ -584,7 +626,7 @@ public class Interface1 extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrMainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(scrMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -780,23 +822,23 @@ public class Interface1 extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         JButton btnDelete = null;
-         JLabel label;
-         int indice=0;
+        JLabel label;
+        int indice = 0;
         for (Component c : Arrays.asList(actionsPanel.getComponents())) {
             if (c instanceof JButton) {
                 btnDelete = (JButton) c;
                 if (btnDelete.getName().equals("btnDelete")) {
                     List<Component> comps = Arrays.asList(editionPanel.getComponents());
-                    
+
                     for (Component comp : comps) {
-                       
+
                         if (comp instanceof JLabel) {
                             label = (JLabel) comp;
                             if (label.getBorder() != null) {
                                 editionPanel.remove((JLabel) comp);
                                 instancePanel.remove(indice);
                                 hi.removeInstance(indice);
-                                
+
                                 instancePanel.repaint();
                                 instancePanel.revalidate();
 
@@ -804,15 +846,14 @@ public class Interface1 extends javax.swing.JFrame {
                         }
                         indice++;
                     }
-                    
+
                     editionPanel.repaint();
                     editionPanel.revalidate();
-                    
 
                 }
 
             }
-            
+
         }
 
     }//GEN-LAST:event_btnDeleteActionPerformed
@@ -878,7 +919,6 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JPanel editionPanel;
     private javax.swing.JPanel instancePanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lClean;
     private javax.swing.JLabel lCompile;
     private javax.swing.JLabel lConfig;
@@ -898,6 +938,7 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JPanel panelPreview;
     private javax.swing.JPanel panelTiles;
     private javax.swing.JPanel resourcesPanel;
+    private javax.swing.JPanel scenePanel;
     private javax.swing.JScrollPane scrEditionPane;
     private javax.swing.JScrollPane scrMainPanel;
     private javax.swing.JScrollPane scrObjectsPanel;
