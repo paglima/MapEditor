@@ -6,7 +6,9 @@
 package mapeditor;
 
 import Utils.FileNameUtils;
+import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,6 +38,7 @@ public class HandleInstances {
 
         JLabel instance = new JLabel();
 
+        instance.setName(label.getName());
         instance.setText(FileNameUtils.removeExtension(label.getName()) + "(" + numInstances + ")");
         instance.setBounds(instancePanel.getX() + posX, (instances.size() * posY), width, height);
         this.instances.add(instance);
@@ -52,6 +55,21 @@ public class HandleInstances {
         instancePanel.repaint();
         instancePanel.validate();
     }
+
+//    public void updateInstances() {
+//        
+//        JOptionPane.showMessageDialog(null, "p1");
+//        numInstances=1;
+//        for (Component component : Arrays.asList(instancePanel.getComponents())) {
+//            JOptionPane.showMessageDialog(null, "p2");
+//            if (component instanceof JLabel) {
+//                JOptionPane.showMessageDialog(null, "p3");
+//                JLabel instance = (JLabel) component;
+//                instance.setText(instance.getName()+ "(" + numInstances + ")");
+//                numInstances++;
+//            }
+//        }
+//    }
 
     public void removeInstance(int i) {
         instances.remove(i);

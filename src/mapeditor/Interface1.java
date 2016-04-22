@@ -2,7 +2,6 @@ package mapeditor;
 
 import Utils.FileNameUtils;
 import droptarget.DragAndDropWithinPanel;
-import semUso.LoadFiles;
 import codebuilder.CodeBuilder;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
@@ -30,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -50,11 +50,12 @@ public class Interface1 extends javax.swing.JFrame {
     ArrayList<JButton> botoes = new ArrayList<JButton>();
     ArrayList<JLabel> lblSprites = new ArrayList<JLabel>();
     ArrayList<JLabel> imagensCarregadas = new ArrayList<JLabel>();
-    List<File> files = new ArrayList<>();
+    LoadFiles ld;
+    JList listaLabels;
     List<LoadFiles> filesNameImg = new ArrayList<>();
     List<JLabel> spritesDoPanel = new ArrayList<>();
     JLabel selecionado = new JLabel("");
-    PreviewSprites pp;
+    HandleObjects handleObjects;
     Zoom zoom;
     DragAndDropWithinPanel dadwp = new DragAndDropWithinPanel();
     HandleEditionScene hes;
@@ -86,10 +87,10 @@ public class Interface1 extends javax.swing.JFrame {
         this.calculatesDimensionJPanel(resourcesPanel);
         this.calculatesDimensionJPanel(scenePanel);
         this.calculatesDimensionJPanel(actionsPanel);
-        this.calculatesDimensionJPanel(panelObjetos);
+        this.calculatesDimensionJPanel(panelObjects);
         this.calculatesDimensionJPanel(panelPreview);
         this.calculatesDimensionJPanel(instancePanel);
-        this.calculatesDimensionJPanel(panelTiles);
+    
 
     }
 
@@ -113,9 +114,10 @@ public class Interface1 extends javax.swing.JFrame {
         this.setPreferredSize(screenSize);
         //this.customDimension();
 
-        pp = new PreviewSprites(labelPreview);
+        
         hes = new HandleEditionScene(actionsPanel, editionPanel, instancePanel, resourcesPanel);
         hi = new HandleInstances(instancePanel);
+        handleObjects = new HandleObjects(panelObjects,labelPreview,instancePanel,editionPanel);
         DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel, instancePanel, hes, hi);
 
         editionPanel.setBackground(Color.white);
@@ -130,10 +132,8 @@ public class Interface1 extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         scrObjectsPanel = new javax.swing.JScrollPane();
         objectsPanel = new javax.swing.JTabbedPane();
-        panelObjetos = new javax.swing.JPanel();
+        panelObjects = new javax.swing.JPanel();
         instancePanel = new javax.swing.JPanel();
-        panelTiles = new javax.swing.JPanel();
-        btn1 = new javax.swing.JButton();
         scrPreviewPanel = new javax.swing.JScrollPane();
         panelPreview = new javax.swing.JPanel();
         labelPreview = new javax.swing.JLabel();
@@ -170,11 +170,12 @@ public class Interface1 extends javax.swing.JFrame {
         lGrid = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1440, 900));
 
-        scrMainPanel.setPreferredSize(new java.awt.Dimension(1439, 899));
+        scrMainPanel.setPreferredSize(new java.awt.Dimension(1440, 899));
 
         mainPanel.setBackground(new java.awt.Color(153, 153, 153));
-        mainPanel.setPreferredSize(new java.awt.Dimension(1439, 899));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1440, 899));
 
         scrObjectsPanel.setBackground(new java.awt.Color(204, 204, 204));
         scrObjectsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Panel Objects"));
@@ -183,21 +184,21 @@ public class Interface1 extends javax.swing.JFrame {
         objectsPanel.setBackground(new java.awt.Color(204, 204, 204));
         objectsPanel.setToolTipText("");
 
-        panelObjetos.setBackground(new java.awt.Color(204, 204, 204));
-        panelObjetos.setToolTipText("Painel de Objetos");
+        panelObjects.setBackground(new java.awt.Color(204, 204, 204));
+        panelObjects.setToolTipText("Painel de Objetos");
 
-        javax.swing.GroupLayout panelObjetosLayout = new javax.swing.GroupLayout(panelObjetos);
-        panelObjetos.setLayout(panelObjetosLayout);
-        panelObjetosLayout.setHorizontalGroup(
-            panelObjetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelObjectsLayout = new javax.swing.GroupLayout(panelObjects);
+        panelObjects.setLayout(panelObjectsLayout);
+        panelObjectsLayout.setHorizontalGroup(
+            panelObjectsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 315, Short.MAX_VALUE)
         );
-        panelObjetosLayout.setVerticalGroup(
-            panelObjetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelObjectsLayout.setVerticalGroup(
+            panelObjectsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 643, Short.MAX_VALUE)
         );
 
-        objectsPanel.addTab("Objects", panelObjetos);
+        objectsPanel.addTab("Objects", panelObjects);
 
         instancePanel.setBackground(new java.awt.Color(204, 204, 204));
         instancePanel.setToolTipText("Painel de Instâncias");
@@ -214,33 +215,6 @@ public class Interface1 extends javax.swing.JFrame {
         );
 
         objectsPanel.addTab("Instances", instancePanel);
-
-        panelTiles.setBackground(new java.awt.Color(204, 204, 204));
-        panelTiles.setToolTipText("Painel Tiles");
-
-        btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Open-folder-add-icon.png"))); // NOI18N
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelTilesLayout = new javax.swing.GroupLayout(panelTiles);
-        panelTiles.setLayout(panelTilesLayout);
-        panelTilesLayout.setHorizontalGroup(
-            panelTilesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTilesLayout.createSequentialGroup()
-                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
-        );
-        panelTilesLayout.setVerticalGroup(
-            panelTilesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTilesLayout.createSequentialGroup()
-                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 593, Short.MAX_VALUE))
-        );
-
-        objectsPanel.addTab("Tiles", panelTiles);
 
         scrObjectsPanel.setViewportView(objectsPanel);
 
@@ -418,7 +392,7 @@ public class Interface1 extends javax.swing.JFrame {
 
         lClean.setText("Clean");
 
-        lZoom.setText("Zoom In    -     Zoom Out");
+        lZoom.setText("Zoom Out  -     Zoom In");
 
         javax.swing.GroupLayout scenePanelLayout = new javax.swing.GroupLayout(scenePanel);
         scenePanel.setLayout(scenePanelLayout);
@@ -453,7 +427,7 @@ public class Interface1 extends javax.swing.JFrame {
                     .addGroup(scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lConfig)
                         .addComponent(lClean))
-                    .addComponent(lZoom, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(lZoom, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(scenePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnClearScene, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -463,7 +437,7 @@ public class Interface1 extends javax.swing.JFrame {
                             .addComponent(btnZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnZoomOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         lCompile.setText("Compile");
@@ -606,8 +580,8 @@ public class Interface1 extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(resourcesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 900, Short.MAX_VALUE))
+                    .addComponent(resourcesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrEditionPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(372, 372, 372))
         );
         mainPanelLayout.setVerticalGroup(
@@ -679,95 +653,16 @@ public class Interface1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnLoadActionPerformed
 
-    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-// Tiles         
-
-// Abrindo o File Chooser
-//        ImageIcon img = null;
-//
-//        File fileName = null;
-//        final JFileChooser fc = new JFileChooser();
-//        int response = fc.showOpenDialog(this);
-//        if (response == JFileChooser.APPROVE_OPTION) {
-//            fileName = fc.getSelectedFile();
-//            img = new ImageIcon(fileName.toString());
-//
-//        } else {
-//            return;
-//        }
-//
-//        // Adiciona um novo botão ao lado do botão de abrir conforme é aberto um nova imagem
-//        botoes.add(new JButton(""));
-//        botoes.get(botoes.size() - 1).setIcon(img);
-//
-//        // traça um limite para a lista de botões na horizontal
-//        if (colunas > 3) {
-//            colunas = 0;
-//            linhas += 50;
-//        }
-//
-//        // posiciona um botão ao lado do outro corretamente
-//        botoes.get(botoes.size() - 1).setBounds(colunas * 50, linhas, 50, 50);
-//        colunas++;
-//        for (int i = 0; i < botoes.size(); i++) {
-//            panelTiles.add((Component) botoes.get(i));
-//
-//            //Adicionando componentes que realizarão drag and drop
-//            botoes.get(i).addMouseListener(dad);
-//            botoes.get(i).setTransferHandler(new TransferHandler("icon"));
-//
-//        }
-//        panelTiles.repaint();
-//        panelTiles.validate();
-//        System.out.println(botoes.size());
-
-    }//GEN-LAST:event_btn1ActionPerformed
-
     private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
-        CodeBuilder cb = new CodeBuilder();
-        List<Component> components = Arrays.asList(editionPanel.getComponents());
-
-        int count = 0;
-        for (Component component : components) {
-            JLabel label = (JLabel) component;
-            label.setName("sprite" + (++count));
-            cb.mountCode(label);
-        }
-
-        cb.generateFile();
+        CodeBuilder cb = new CodeBuilder(scrEditionPane,editionPanel);
+        cb.generate();
 
     }//GEN-LAST:event_btnCompileActionPerformed
 
     private void btnImportSpritesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportSpritesActionPerformed
-
-        final JFileChooser fc = new JFileChooser();
-        fc.setMultiSelectionEnabled(true);
-        int response = fc.showOpenDialog(this);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            files = Arrays.asList(fc.getSelectedFiles());
-
-            for (File file : files) {
-
-                JLabel label = new JLabel();
-                label.setName(file.getName());
-                label.setText(FileNameUtils.removeExtension(file.getName()));
-                label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png"), file.getAbsolutePath()));
-                label.setBounds(panelObjetos.getX() + 5, initialY, 300, 25);
-                label.addMouseListener(pp);
-
-                panelObjetos.add((Component) label);
-
-                DragSource ds = new DragSource();
-                ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl(labelPreview));
-                initialY = initialY + 26;
-            }
-
-        } else {
-            return;
-        }
-        panelObjetos.repaint();
-        panelObjetos.validate();
-
+        ld = new LoadFiles(panelObjects, handleObjects,labelPreview, listaLabels);
+        ld.addInPanelObjects();
+       
     }//GEN-LAST:event_btnImportSpritesActionPerformed
 
     private void btnNewFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewFileActionPerformed
@@ -800,7 +695,7 @@ public class Interface1 extends javax.swing.JFrame {
             }
         }
 
-        CodeBuilder cb = new CodeBuilder();
+        CodeBuilder cb = new CodeBuilder(scrEditionPane,editionPanel);
         List<Component> components = Arrays.asList(editionPanel.getComponents());
 
         int count = 0;
@@ -915,7 +810,6 @@ public class Interface1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionsPanel;
-    private javax.swing.JButton btn1;
     private javax.swing.JButton btnClearScene;
     private javax.swing.JButton btnCompile;
     private javax.swing.JButton btnDelete;
@@ -947,9 +841,8 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JTabbedPane objectsPanel;
-    private javax.swing.JPanel panelObjetos;
+    private javax.swing.JPanel panelObjects;
     private javax.swing.JPanel panelPreview;
-    private javax.swing.JPanel panelTiles;
     private javax.swing.JPanel resourcesPanel;
     private javax.swing.JPanel scenePanel;
     private javax.swing.JScrollPane scrEditionPane;
