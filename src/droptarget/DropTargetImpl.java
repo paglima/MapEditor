@@ -1,5 +1,6 @@
 package droptarget;
 
+import Utils.FileNameUtils;
 import mapeditor.HandleEditionScene;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -11,9 +12,10 @@ import java.awt.dnd.DropTargetListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
 import mapeditor.HandleInstances;
+import mapeditor.Sprite;
 
 public class DropTargetImpl extends DropTargetAdapter implements DropTargetListener {
 
@@ -22,7 +24,7 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
     private JPanel instancePanel;
     private HandleEditionScene hes;
     private HandleInstances handleInstances;
-    private List<JLabel> listaDeInstancias = new ArrayList<>();
+    private List<Sprite> listaDeInstancias = new ArrayList<>();
     int numInstancias=0;
     int initialY=0;
 
@@ -37,22 +39,25 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
     
     @Override
     public void drop(DropTargetDropEvent event) {
-        DataFlavor dataFlavor = new DataFlavor(JLabel.class, JLabel.class.getSimpleName());
+        DataFlavor dataFlavor = new DataFlavor(Sprite.class, Sprite.class.getSimpleName());
         try {
             Transferable tr = event.getTransferable();
             
-            JLabel label = (JLabel) tr.getTransferData(dataFlavor);
-            ImageIcon path = (ImageIcon)label.getIcon();
+            Sprite sprite =  (Sprite) tr.getTransferData(dataFlavor);
+            ImageIcon path = (ImageIcon)sprite.getIcon();
             
-            label.setText(null);
-            label.setIcon(new ImageIcon(path.getDescription()));
-            label.setBorder(null);
+            
+            sprite.setNameFile(sprite.getName());
+            sprite.setNameText(FileNameUtils.removeExtension(sprite.getName()));
+            sprite.setText(null);
+            sprite.setIcon(new ImageIcon(path.getDescription()));
+            sprite.setBorder(null);
             
 //            listaDeInstancias.add(label);
-            handleInstances.addInstance(label);
+            handleInstances.addInstance(sprite);
             
-            label.addMouseListener(new DragAndDropWithinPanel(hes,handleInstances));
-            label.addMouseMotionListener(new DragAndDropWithinPanel(hes,handleInstances));
+            sprite.addMouseListener(new DragAndDropWithinPanel(hes,handleInstances));
+            sprite.addMouseMotionListener(new DragAndDropWithinPanel(hes,handleInstances));
                       
 //            numInstancias++;
             
@@ -70,8 +75,8 @@ public class DropTargetImpl extends DropTargetAdapter implements DropTargetListe
             if (event.isDataFlavorSupported(dataFlavor)) {
                 event.acceptDrop(DnDConstants.ACTION_COPY);
                 
-                label.setBounds(event.getLocation().x, event.getLocation().y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());          
-                this.editionPanel.add(label);
+                sprite.setBounds(event.getLocation().x, event.getLocation().y, sprite.getIcon().getIconWidth(), sprite.getIcon().getIconHeight());          
+                this.editionPanel.add(sprite);
 //                instances.add(label);
                 this.editionPanel.repaint();
                 event.dropComplete(true);

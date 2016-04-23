@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  */
 public class HandleInstances {
 
-    List<JLabel> instances = new ArrayList<>();
+    List<Sprite> instances = new ArrayList<>();
     JPanel instancePanel;
     int numInstances = 0;
     int countInstances = 0;
@@ -33,20 +33,21 @@ public class HandleInstances {
         this.instancePanel = instancePanel;
     }
 
-    public void addInstance(JLabel label) {
+    public void addInstance(Sprite sprite) {
         instancePanel.removeAll();
 
-        JLabel instance = new JLabel();
-
-        instance.setName(label.getName());
-        instance.setText(FileNameUtils.removeExtension(label.getName()) + "(" + numInstances + ")");
+        Sprite instance = new Sprite();
+        instance.setNameFile(sprite.getNameFile());
+        instance.setNameText(sprite.getNameText());
+        instance.setName(sprite.getName());
+        instance.setText(sprite.getNameText() + "(" + numInstances + ")");
         instance.setBounds(instancePanel.getX() + posX, (instances.size() * posY), width, height);
         this.instances.add(instance);
         numInstances++;
 
-        for (JLabel l : instances) {
-            l.setLocation(instancePanel.getX() + posX, (countInstances * posY));
-            this.instancePanel.add(l);
+        for (Sprite s : instances) {
+            s.setLocation(instancePanel.getX() + posX, (countInstances * posY));
+            this.instancePanel.add(s);
             countInstances++;
         }
 
@@ -86,11 +87,11 @@ public class HandleInstances {
         instancePanel.validate();
     }
 
-    public void setInstances(List<JLabel> instances) {
+    public void setInstances(List<Sprite> instances) {
         this.instances = instances;
     }
 
-    public List<JLabel> getInstances() {
+    public List<Sprite> getInstances() {
         return instances;
     }
 

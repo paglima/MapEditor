@@ -4,16 +4,17 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import javax.swing.JLabel;
 
-public class TransferableJLabel implements Transferable {
+import mapeditor.Sprite;
 
-    private JLabel label;
-    DataFlavor dataFlavor = new DataFlavor(JLabel.class,
-            JLabel.class.getSimpleName());
+public class TransferableSprite implements Transferable {
 
-    public TransferableJLabel(JLabel label) {
-        this.label = label;
+    private Sprite sprite;
+    DataFlavor dataFlavor = new DataFlavor(Sprite.class,
+            Sprite.class.getSimpleName());
+
+    public TransferableSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class TransferableJLabel implements Transferable {
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
 
         if (flavor.equals(dataFlavor)) {
-            return label;
+            return sprite;
         } else {
             throw new UnsupportedFlavorException(flavor);
         }

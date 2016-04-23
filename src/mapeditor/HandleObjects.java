@@ -36,40 +36,53 @@ public class HandleObjects extends MouseAdapter implements MouseListener {
 
     }
 
-    public void findComponentAndRename(MouseEvent e, String name, JPanel panel) {
+    public Sprite findComponent(MouseEvent e, JPanel panel) {
         for (Component component : Arrays.asList(panel.getComponents())) {
             if (component.getName().equals(e.getComponent().getName())) {
-                if (component instanceof JLabel) {
+                if (component instanceof Sprite) {
 
-                    JLabel label = (JLabel) component;
-                    label.setName(name);
-                    label.setText(name);
+                    Sprite sprite = (Sprite) component;
+                    return sprite;
+                    
 
                 }
 
             }
         }
+        return null;
     }
 
-    public void updateInstancesInEditionPanel(String name) {
+    public void Rename(String name, Sprite sprite) {
+        sprite.setName(name);
+        sprite.setText(name);
+        sprite.setNameText(name);
+    }
+
+    public void findComponentAndRename(MouseEvent e, String name, JPanel panel) {
+        Sprite sprite = this.findComponent(e, panel);
+        this.Rename(name, sprite);
+    }
+
+    public void updateInstancesInEditionPanel(String name, Sprite sprite) {
         for (Component component : Arrays.asList(editionPanel.getComponents())) {
-
-            if (component instanceof JLabel) {
-
-                JLabel label = (JLabel) component;
-                label.setName(name);
-
+            if (component instanceof Sprite) {
+                Sprite s = (Sprite) component;
+                if (s.getNameFile().equals(sprite.getNameFile())) {
+                    s.setNameText(name);
+                }
             }
-
         }
+
     }
 
     public void updateInstances() {
         int numInstances = 1;
         for (Component component : Arrays.asList(instancePanel.getComponents())) {
-            if (component instanceof JLabel) {
-                JLabel instance = (JLabel) component;
-                instance.setText(instance.getName() + "(" + numInstances + ")");
+            if (component instanceof Sprite) {
+
+                Sprite instance = (Sprite) component;
+
+                instance.setText(instance.getNameText() + "(" + numInstances + ")");
                 numInstances++;
             }
         }
@@ -79,22 +92,23 @@ public class HandleObjects extends MouseAdapter implements MouseListener {
     public void mouseClicked(MouseEvent e) {
 
         if (e.getClickCount() == 1) {
-            JLabel label = (JLabel) e.getComponent();
+            Sprite Sprite = (Sprite) e.getComponent();
 
-            ImageIcon path = (ImageIcon) label.getIcon();
+            ImageIcon path = (ImageIcon) Sprite.getIcon();
 
             imagePreview.setIcon(new ImageIcon(path.getDescription()));
             imagePreview.setText(null);
             //        imagePreview.setIcon(new ImageIcon(label.getName()));
             imagePreview.setBounds(imagePreview.getX() + imagePreview.getWidth() / 2, imagePreview.getY() + imagePreview.getHeight() / 2,
-                    label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
+                    Sprite.getIcon().getIconWidth(), Sprite.getIcon().getIconHeight());
         } else if (e.getClickCount() == 2) {
-            String Name = JOptionPane.showInputDialog(null, "digite um novo nome");
-
-            this.findComponentAndRename(e, Name, instancePanel);
-            this.findComponentAndRename(e, Name, panelObjects);
+            String name = JOptionPane.showInputDialog(null, "digite um novo nome");
+            
+            Sprite sprite = this.findComponent(e, panelObjects);
+            this.findComponentAndRename(e, name, instancePanel);
+            this.findComponentAndRename(e, name, panelObjects);
             this.updateInstances();
-            this.updateInstancesInEditionPanel(Name);
+            this.updateInstancesInEditionPanel(name,sprite);
 
         }
 

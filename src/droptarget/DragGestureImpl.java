@@ -12,6 +12,7 @@ import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import mapeditor.Sprite;
 
 /**
  *
@@ -30,20 +31,20 @@ public class DragGestureImpl implements DragGestureListener {
     @Override
     public void dragGestureRecognized(DragGestureEvent event) {
         Cursor cursor = null;
-        JLabel label = (JLabel) event.getComponent();
+        Sprite sprite = (Sprite) event.getComponent();
         
         imagePreview.setText(null);
-        ImageIcon path = (ImageIcon)label.getIcon();
+        ImageIcon path = (ImageIcon)sprite.getIcon();
         imagePreview.setIcon(new ImageIcon(path.getDescription()));
         imagePreview.setBounds(imagePreview.getX()+imagePreview.getWidth()/2, imagePreview.getY()+imagePreview.getHeight()/2,
-                               label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
+                               sprite.getIcon().getIconWidth(), sprite.getIcon().getIconHeight());
         
         
         if (event.getDragAction() == DnDConstants.ACTION_COPY) {
             cursor = DragSource.DefaultCopyDrop;
         }
         
-        event.startDrag(cursor, new TransferableJLabel(label));
+        event.startDrag(cursor, new TransferableSprite(sprite));
     }
     
 }

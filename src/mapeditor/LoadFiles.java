@@ -49,17 +49,19 @@ public class LoadFiles {
 
             for (File file : files) {
 
-                JLabel label = new JLabel();
-                label.setName(file.getName());
-                label.setText(FileNameUtils.removeExtension(file.getName()));
-                label.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png"), file.getAbsolutePath()));
-                label.setBounds(panelObjects.getX() + 5, initialY, 300, 25);
-                label.addMouseListener(handleObjects);
+                Sprite sprite = new Sprite();
+                sprite.setNameFile(file.getName());
+                sprite.setNameText(FileNameUtils.removeExtension(file.getName()));
+                sprite.setName(file.getName());
+                sprite.setText(FileNameUtils.removeExtension(file.getName()));
+                sprite.setIcon(new ImageIcon(getClass().getResource("/imagens/Images-icon.png"), file.getAbsolutePath()));
+                sprite.setBounds(panelObjects.getX() + 5, initialY, 300, 25);
+                sprite.addMouseListener(handleObjects);
 
-                panelObjects.add((Component) label);
+                panelObjects.add((Component) sprite);
 
                 DragSource ds = new DragSource();
-                ds.createDefaultDragGestureRecognizer(label, DnDConstants.ACTION_COPY, new DragGestureImpl(labelPreview));
+                ds.createDefaultDragGestureRecognizer(sprite, DnDConstants.ACTION_COPY, new DragGestureImpl(labelPreview));
                 initialY = initialY + 26;
             }
 

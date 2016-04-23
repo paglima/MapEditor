@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import mapeditor.Sprite;
 
 /**
  *
@@ -43,12 +44,12 @@ public class CodeBuilder {
                 .append("\n");
     }
 
-    public void mountCode(JLabel instance) {
+    public void mountCode(Sprite instance) {
         String instance1 = "{0} = Sprite(\"{1}\")";
         String setPosition = "{0}.set_position({1},{2})";
 
-        String line1 = MessageFormat.format(instance1, instance.getName(), instance.getName());
-        String line2 = MessageFormat.format(setPosition, instance.getName(), instance.getBounds().getX(), instance.getBounds().getY());
+        String line1 = MessageFormat.format(instance1, instance.getNameText(), instance.getNameFile());
+        String line2 = MessageFormat.format(setPosition, instance.getNameText(), instance.getBounds().getX(), instance.getBounds().getY());
 
         totalCode.append(line1);
         totalCode.append("\n");
@@ -61,9 +62,9 @@ public class CodeBuilder {
 
         int count = 0;
         for (Component component : components) {
-            if(component instanceof JLabel){
-                JLabel instance = (JLabel) component;
-                instance.setName(FileNameUtils.removeExtension(instance.getName())+""+ (++count));
+            if(component instanceof Sprite){
+                Sprite instance = (Sprite) component;
+//                instance.setName(instance.getNameText()+""+ (++count));
                 this.mountCode(instance);
             }
         }

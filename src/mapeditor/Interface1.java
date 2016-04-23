@@ -700,9 +700,9 @@ public class Interface1 extends javax.swing.JFrame {
 
         int count = 0;
         for (Component component : components) {
-            JLabel label = (JLabel) component;
-            label.setName("sprite" + (++count));
-            cb.mountCode(label);
+            Sprite sprite = (Sprite) component;
+            sprite.setName("sprite" + (++count));
+            cb.mountCode(sprite);
         }
 
         cb.generateFile();
