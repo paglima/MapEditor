@@ -43,8 +43,7 @@ public class HandleObjects extends MouseAdapter implements MouseListener {
 
                     Sprite sprite = (Sprite) component;
                     return sprite;
-                    
-
+                   
                 }
 
             }

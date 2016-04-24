@@ -72,6 +72,50 @@ public class LoadFiles {
         panelObjects.validate();
 
     }
+//    public void addinTilesPanel(){
+//        // Tiles         
+//
+//
+// //Abrindo o File Chooser
+//
+//        ImageIcon img = null;
+//
+//        File fileName = null;
+//        final JFileChooser fc = new JFileChooser();
+//        int response = fc.showOpenDialog(null);
+//        if (response == JFileChooser.APPROVE_OPTION) {
+//            fileName = fc.getSelectedFile();
+//            img = new ImageIcon(fileName.toString());
+//
+//        } else {
+//            return;
+//        }
+//
+//        // Adiciona um novo botão ao lado do botão de abrir conforme é aberto um nova imagem
+//        botoes.add(new JButton(""));
+//        botoes.get(botoes.size() - 1).setIcon(img);
+//
+//        // traça um limite para a lista de botões na horizontal
+//        if (colunas > 3) {
+//            colunas = 0;
+//            linhas += 50;
+//        }
+//
+//        // posiciona um botão ao lado do outro corretamente
+//        botoes.get(botoes.size() - 1).setBounds(colunas * 50, linhas, 50, 50);
+//        colunas++;
+//        for (int i = 0; i < botoes.size(); i++) {
+//            panelTiles.add((Component) botoes.get(i));
+//
+//            //Adicionando componentes que realizarão drag and drop
+//            botoes.get(i).addMouseListener(dad);
+//            botoes.get(i).setTransferHandler(new TransferHandler("icon"));
+//
+//        }
+//        panelTiles.repaint();
+//        panelTiles.validate();
+//        System.out.println(botoes.size());
+//    }
     
 //    public void createAJList(){
 //         String labels[] = { "A", "B", "C", "D", "E", "F", "G", "H" }; 

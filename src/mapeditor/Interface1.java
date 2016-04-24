@@ -60,6 +60,8 @@ public class Interface1 extends javax.swing.JFrame {
     DragAndDropWithinPanel dadwp = new DragAndDropWithinPanel();
     HandleEditionScene hes;
     HandleInstances hi;
+    HandleTiles handleTiles;
+    Tiles tiles;
     
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     
@@ -118,9 +120,12 @@ public class Interface1 extends javax.swing.JFrame {
         hes = new HandleEditionScene(actionsPanel, editionPanel, instancePanel, resourcesPanel);
         hi = new HandleInstances(instancePanel);
         handleObjects = new HandleObjects(panelObjects,labelPreview,instancePanel,editionPanel);
+        handleTiles = new HandleTiles(labelPreview);
         DropTargetImpl dropTargetImpl = new DropTargetImpl(editionPanel, instancePanel, hes, hi);
 
         editionPanel.setBackground(Color.white);
+        tiles= new Tiles(editionPanel,tilesPanel,handleTiles);
+        
 
     }
 
@@ -134,6 +139,8 @@ public class Interface1 extends javax.swing.JFrame {
         objectsPanel = new javax.swing.JTabbedPane();
         panelObjects = new javax.swing.JPanel();
         instancePanel = new javax.swing.JPanel();
+        tilesPanel = new javax.swing.JPanel();
+        btnImportTiles = new javax.swing.JButton();
         scrPreviewPanel = new javax.swing.JScrollPane();
         panelPreview = new javax.swing.JPanel();
         labelPreview = new javax.swing.JLabel();
@@ -191,11 +198,11 @@ public class Interface1 extends javax.swing.JFrame {
         panelObjects.setLayout(panelObjectsLayout);
         panelObjectsLayout.setHorizontalGroup(
             panelObjectsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 315, Short.MAX_VALUE)
+            .addGap(0, 325, Short.MAX_VALUE)
         );
         panelObjectsLayout.setVerticalGroup(
             panelObjectsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 643, Short.MAX_VALUE)
+            .addGap(0, 762, Short.MAX_VALUE)
         );
 
         objectsPanel.addTab("Objects", panelObjects);
@@ -207,14 +214,42 @@ public class Interface1 extends javax.swing.JFrame {
         instancePanel.setLayout(instancePanelLayout);
         instancePanelLayout.setHorizontalGroup(
             instancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 315, Short.MAX_VALUE)
+            .addGap(0, 325, Short.MAX_VALUE)
         );
         instancePanelLayout.setVerticalGroup(
             instancePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 643, Short.MAX_VALUE)
+            .addGap(0, 762, Short.MAX_VALUE)
         );
 
         objectsPanel.addTab("Instances", instancePanel);
+
+        tilesPanel.setToolTipText("Painel Tiles");
+
+        btnImportTiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/clickTiles2.png"))); // NOI18N
+        btnImportTiles.setToolTipText("Clique para importar os sprites tiles");
+        btnImportTiles.setPreferredSize(new java.awt.Dimension(64, 64));
+        btnImportTiles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportTilesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tilesPanelLayout = new javax.swing.GroupLayout(tilesPanel);
+        tilesPanel.setLayout(tilesPanelLayout);
+        tilesPanelLayout.setHorizontalGroup(
+            tilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tilesPanelLayout.createSequentialGroup()
+                .addComponent(btnImportTiles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 261, Short.MAX_VALUE))
+        );
+        tilesPanelLayout.setVerticalGroup(
+            tilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tilesPanelLayout.createSequentialGroup()
+                .addComponent(btnImportTiles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 698, Short.MAX_VALUE))
+        );
+
+        objectsPanel.addTab("Tiles", tilesPanel);
 
         scrObjectsPanel.setViewportView(objectsPanel);
 
@@ -516,6 +551,11 @@ public class Interface1 extends javax.swing.JFrame {
 
         btnGridLayout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Data-Grid-icon.png"))); // NOI18N
         btnGridLayout.setToolTipText("Grid layout(para tiles)");
+        btnGridLayout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGridLayoutActionPerformed(evt);
+            }
+        });
 
         lNewFile.setText("New File");
 
@@ -766,6 +806,15 @@ public class Interface1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnGridLayoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGridLayoutActionPerformed
+          tiles.openSettings(); 
+
+    }//GEN-LAST:event_btnGridLayoutActionPerformed
+
+    private void btnImportTilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportTilesActionPerformed
+        tiles.importTiles();
+    }//GEN-LAST:event_btnImportTilesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -815,6 +864,7 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnGridLayout;
     private javax.swing.JButton btnImportSprites;
+    private javax.swing.JButton btnImportTiles;
     private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnNewFile;
     private javax.swing.JToggleButton btnRotate;
@@ -849,5 +899,6 @@ public class Interface1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrMainPanel;
     private javax.swing.JScrollPane scrObjectsPanel;
     private javax.swing.JScrollPane scrPreviewPanel;
+    private javax.swing.JPanel tilesPanel;
     // End of variables declaration//GEN-END:variables
 }
